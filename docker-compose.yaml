@@ -10,7 +10,7 @@ services:
       - cimex-odoo-data:/var/lib/odoo
       - ./config_odoo:/etc/odoo
       - ./addons:/mnt/extra-addons
-      - ./log:/var/log/odoo
+      - ./log:/var/log/odoo/
     environment:
       - HOST=cimex_db
       - USER=odoo

@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="mgpp.list">
+      <field name="name">mgpp list</field>
+      <field name="model">mgpp.mgpp</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="mgpp.action_window">
+      <field name="name">mgpp window</field>
+      <field name="res_model">mgpp.mgpp</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="mgpp.action_server">
+      <field name="name">mgpp server</field>
+      <field name="model_id" ref="model_mgpp_mgpp"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="mgpp" id="mgpp.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="mgpp.menu_1" parent="mgpp.menu_root"/>
+    <menuitem name="Menu 2" id="mgpp.menu_2" parent="mgpp.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="mgpp.menu_1_list" parent="mgpp.menu_1"
+              action="mgpp.action_window"/>
+    <menuitem name="Server to list" id="mgpp" parent="mgpp.menu_2"
+              action="mgpp.action_server"/>
+-->
+  </data>
+</odoo>
