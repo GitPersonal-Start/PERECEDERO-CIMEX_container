@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <!-- Menu del Sistema -->
+        <menuitem id="menu_perecedero" name="Perecedero" sequence="1" />
+        <!-- Menus Principales -->
+        <menuitem id="menu_administracion" name="Administracion" parent="menu_perecedero"
+            sequence="1" />
+        <menuitem id="menu_registro" name="Registro" parent="menu_perecedero"
+            sequence="2" />
+        <menuitem id="menu_gestion" name="Gestion" parent="menu_perecedero"
+            sequence="3" />
+        <menuitem id="menu_configuracion" name="Configuracion" parent="menu_perecedero"
+            sequence="4" />
+
+        <!-- Submenus -->
+        <menuitem id="menu_estructura" name="Estructura Empresa" parent="menu_administracion"
+            sequence="1" action="action_empresa" />
+
+        <menuitem id="menu_registro_producto" name="Productos" parent="menu_registro" sequence="1"
+            action="action_producto" />
+        <menuitem id="menu_registro_lotes" name="Lotes" parent="menu_registro" sequence="2"
+            action="action_lote" />
+
+
+        <menuitem id="menu_registro_categoria" name="Categoria" parent="menu_configuracion"
+            sequence="1"
+            action="action_categoria" />
+        <menuitem id="menu_registro_etiquetas" name="Etiquetas" parent="menu_configuracion"
+            sequence="2"
+            action="action_etiqueta" />
+        <menuitem id="menu_registro_unidad_medida" name="Unidad de Medida" parent="menu_configuracion"
+            sequence="3"
+            action="action_um" />
+        <!-- <menuitem id="menu_producto" name="Productos" parent="menu_registro"
+            action="action_producto" sequence="1" />
+        <menuitem id="menu_lote" name="Lotes" parent="menu_registro"
+            action="action_lote" sequence="2" />
+
+
+        <menuitem id="menu_solicitud_rebaja" name="Solicitud de Rebaja" parent="menu_gestion"
+            action="action_solicitud" sequence="1" /> -->
+    </data>
+</odoo>
