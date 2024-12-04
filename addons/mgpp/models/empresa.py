@@ -7,10 +7,10 @@ class Empresa(models.Model):
     _description = 'mgpp.empresa'
 
     name = fields.Char(string='Nombre', required=True)
-    codigo = fields.Char(string='Código', required=True)
+    codigo = fields.Char(string='Codigo', required=True)
     image = fields.Image(max_width=120, max_height=120)
-    telefono = fields.Char(string='Teléfono')
-    correo = fields.Char(string='Correo Electrónico')
+    telefono = fields.Char(string='Telefono')
+    correo = fields.Char(string='Correo Electronico')
     
     # Dirección
     calle = fields.Char(string='Calle', required=True)
@@ -18,10 +18,10 @@ class Empresa(models.Model):
     num = fields.Char(string='No:')
     municipio = fields.Char(string='Municipio', required=True)
     provincia = fields.Char(string='Provincia', required=True)
-    cp = fields.Char(string='Código Postal')
-    areas_ids = fields.One2many('mgpp.area', 'empresa_id', string="Áreas")
-    create_date = fields.Datetime(string='Fecha de Creación', readonly=True)
-    write_date = fields.Datetime(string='Fecha de Modificación', readonly=True)
+    cp = fields.Char(string='Codigo Postal')
+    areas_ids = fields.One2many('mgpp.area', 'empresa_id', string="Areas")
+    create_date = fields.Datetime(string='Fecha de Creacion', readonly=True)
+    write_date = fields.Datetime(string='Fecha de Modificacion', readonly=True)
     empresa_padre_id = fields.Many2one('mgpp.empresa', string='Empresa Superior', ondelete='set null')
     empresas_hijas_ids = fields.One2many('mgpp.empresa', 'empresa_padre_id', string='Empresas Relacionadas')
     tipo_empresa = fields.Selection([
@@ -29,8 +29,8 @@ class Empresa(models.Model):
         ('sucursal', 'Sucursal'),
         ('establecimiento', 'Establecimiento')
     ], string='Tipo de Empresa', required=True)
-    num_empleados = fields.Integer(string='Número de Empleados')
-    descripcion = fields.Text(string='Descripción')
+    num_empleados = fields.Integer(string='Numero de Empleados')
+    descripcion = fields.Text(string='Descripcion')
     estado = fields.Boolean(string='Estado')
     @api.onchange('tipo_empresa')
     def onchange_tipo_empresa(self):
@@ -56,8 +56,8 @@ class Area(models.Model):
     _name = 'mgpp.area'
     _description = 'mgpp.area'
 
-    name = fields.Char(string='Nombre del Área', required=True)
-    codigo = fields.Char(string='Código', required=True)
+    name = fields.Char(string='Nombre del Area', required=True)
+    codigo = fields.Char(string='CCdigo', required=True)
     create_date = fields.Datetime(string='Fecha de Creacion', readonly=True)
     write_date = fields.Datetime(string='Fecha de Modificacion', readonly=True)
     estado = fields.Boolean(string='Estado')

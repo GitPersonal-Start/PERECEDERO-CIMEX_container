@@ -48,7 +48,7 @@
                             <page string="Datos Adicionales">
                                 <group>
                                     <group>
-                                        <field name="categoria" string="Categoría de producto" />
+                                        <field name="categoria" string="Categoria de producto" />
                                         <field name="existencia" />
                                         <field name="descripcion" />
                                         <field name="estado" />
@@ -132,7 +132,7 @@
                                         <field name="cantidad" />
                                     </tree>
                                 </field>
-                                <button name="create_new_ubicacion_fisica" type="object" string="Nueva Ubicación Física" class="btn-primary" />
+                                <button name="create_new_ubicacion_fisica" type="object" string="Nueva Ubicacion Fisica" class="btn-primary" />
                             </page>
                         </notebook>
                     </sheet>
@@ -144,7 +144,7 @@
             <field name="name">view.form.Ubicaion_fisica</field>
             <field name="model">mgpp.ubicacion_fisica</field>
             <field name="arch" type="xml">
-                <form string="Ubicación Física">
+                <form string="Ubicacion Fisica">
                     <sheet>
                         <group>
                             <field name="empresa_id" />

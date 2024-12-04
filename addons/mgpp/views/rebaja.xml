@@ -1,0 +1,193 @@
+<odoo>
+    <data>
+        <!-- Acciones de Vistas -->
+        <!-- Accion de Rebaja -->
+        <record id="action_rebaja" model="ir.actions.act_window">
+            <field name="name">Rebajas</field>
+            <field name="res_model">mgpp.rebaja</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Accion de Solicitud de Rebaja -->
+        <record id="action_solicitud_rebaja" model="ir.actions.act_window">
+            <field name="name">Solicitudes de Rebajas</field>
+            <field name="res_model">mgpp.solicitud_rebaja</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <!-- <field name="domain">[('solicitud_valida', '=', True)]</field> -->
+        </record>
+        <!-- vista tree de Rebaja  -->
+        <record id="view_tree_rebaja" model="ir.ui.view">
+            <field name="name">view.tree.rebaja</field>
+            <field name="model">mgpp.rebaja</field>
+            <field name="arch" type="xml">
+                <tree string="Rebajas" create="false" editable="bottom">
+                    <field name="name" string="Código" />
+                    <field name="lote_id" string="Lote Asociado" />
+                    <field name="precio_inicial" string="Precio Inicial" />
+                    <field name="precio_actual" string="Precio Actual" />
+                    <field name="estado" string="Estado Actual" />
+                    <field name="descuento" string="Descuento Aplicado" />
+                    <field name="fecha_creacion" string="Creación" />
+                    <field name="fecha_finalizacion" string="Finalización" />
+                    <field name="dias_restantes" string="Días Restantes" />
+                    <button string="Ver Solicitudes" type="object" name="action_open_solicitudes"
+                        icon="fa-folder-open" />
+                </tree>
+
+            </field>
+        </record>
+        <record id="view_kanban_rebaja" model="ir.ui.view">
+            <field name="name">view.kanban.rebaja</field>
+            <field name="model">mgpp.rebaja</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="estado" create="false">
+                    <field name="name" />
+                    <field name="rebaja_id" />
+                    <field name="descuento" />
+                    <field name="precio_aplicado" />
+                    <field name="estado" />
+                    <field name="fecha_solicitud" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="o_kanban_card">
+                                <div class="oe_kanban_content">
+                                    <strong>Solicitud:</strong>
+                                    <field name="name" />
+                                    <div>
+                                        <strong>Descuento:</strong>
+                                        <field name="descuento" />
+                                    </div>
+                                    <div>
+                                        <strong>Precio:</strong>
+                                        <field name="precio_aplicado" />
+                                    </div>
+                                    <div>
+                                        <strong>Estado:</strong>
+                                        <span t-att-class="'badge badge-' + record.estado.raw_value" />
+                                        <field name="estado" />
+                                    </div>
+                                    <div>
+                                        <strong>Fecha:</strong>
+                                        <field name="fecha_solicitud" />
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!--  vista form de Rebajas -->
+        <record id="view_form_rebaja" model="ir.ui.view">
+            <field name="name">view.form.rebaja</field>
+            <field name="model">mgpp.rebaja</field>
+            <field name="arch" type="xml">
+                <form string="Rebajas">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="lote_id" />
+                                <field name="precio_inicial" />
+                                <field name="precio_actual" />
+                                <field name="descuento" />
+                            </group>
+                            <group>
+                                <field name="estado" />
+                                <field name="fecha_creacion" />
+                                <field name="fecha_finalizacion" />
+                                <field name="fecha_modificacion" />
+                                <field name="dias_restantes" />
+                            </group>
+                            <field name="observaciones" />
+                        </group>
+                        <notebook>
+                            <page string="Solicitudes de Rebajas">
+                                <field name="solicitudes_ids">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="descuento" />
+                                        <field name="precio_aplicado" />
+                                        <field name="estado" />
+                                        <field name="fecha_solicitud" />
+                                    </tree>
+                                </field>
+                                <button name="action_crear_solicitud" type="object" string="Crear Solicitud" class="oe_highlight" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_solicitud_rebaja_tree" model="ir.ui.view">
+            <field name="name">solicitud.rebaja.tree</field>
+            <field name="model">mgpp.solicitud_rebaja</field>
+            <field name="arch" type="xml">
+                <tree string="Solicitudes de Rebaja">
+                    <field name="name" string="Codigo" />
+                    <field name="descuento" string="Descuento" />
+                    <field name="precio_aplicado" string="Precio Aplicado" />
+                    <field name="estado" string="Estado" />
+                    <field name="fecha_solicitud" string="Fecha de Solicitud" />
+                </tree>
+            </field>
+        </record>
+        <record id="view_solicitud_rebaja_form" model="ir.ui.view">
+            <field name="name">solicitud.rebaja.form</field>
+            <field name="model">mgpp.solicitud_rebaja</field>
+            <field name="arch" type="xml">
+                <form string="Solicitudes de Rebajas">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="rebaja_id" />
+                                <field name="descuento" />
+                            </group>
+                            <group>
+                                <field name="precio_aplicado" />
+                                <field name="estado" />
+                                <field name="fecha_solicitud" />
+                            </group>
+                            <field name="observaciones" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_solicitud_rebaja_kanban" model="ir.ui.view">
+            <field name="name">solicitud.rebaja.kanban</field>
+            <field name="model">mgpp.solicitud_rebaja</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_example" default_group_by="estado" create="false">
+                    <field name="name" string="Codigo" />
+                    <field name="rebaja_id" string="Rebaja" />
+                    <field name="descuento" string="Descuento" />
+                    <field name="precio_aplicado" string="Precio Aplicado" />
+                    <field name="estado" string="Estado" />
+                    <field name="fecha_solicitud" string="Fecha de Solicitud" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-att-class="'o_kanban_record'" class="o_kanban_card">
+                                <div class="o_kanban_primary_left">
+                                    <field name="name" class="o_field_char" />
+                                    <div>
+                                        <strong>Descuento:</strong>
+                                        <field name="descuento" />
+                                    </div>
+                                    <div>
+                                        <strong>Precio Aplicado:</strong>
+                                        <field name="precio_aplicado" />
+                                    </div>
+                                    <div>
+                                        <strong>Estado:</strong>
+                                        <field name="estado" />
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>

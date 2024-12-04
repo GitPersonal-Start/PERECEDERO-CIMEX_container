@@ -8,5 +8,5 @@ access_mgpp_um,mgpp.um,model_mgpp_um,base.group_user,1,1,1,1
 access_mgpp_ubicacion,mgpp.ubicacion,model_mgpp_ubicacion,base.group_user,1,1,1,1
 access_mgpp_ubicacion_fisica,mgpp.ubicacion_fisica,model_mgpp_ubicacion_fisica,base.group_user,1,1,1,1
 access_mgpp_lote,mgpp.lote,model_mgpp_lote,base.group_user,1,1,1,1
-access_mgpp_solicitud_rebaja,mgpp.solicitud_rebaja,model_mgpp_solicitud_rebaja,base.group_user,1,1,1,1
 access_mgpp_rebaja,mgpp.rebaja,model_mgpp_rebaja,base.group_user,1,1,1,1
+access_mgpp_solicitud_rebaja,mgpp.solicitud_rebaja,model_mgpp_solicitud_rebaja,base.group_user,1,1,1,1

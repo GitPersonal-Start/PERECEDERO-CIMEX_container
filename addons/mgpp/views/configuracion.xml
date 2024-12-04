@@ -34,7 +34,7 @@
             <field name="name">view.form.categoria</field>
             <field name="model">mgpp.categoria</field>
             <field name="arch" type="xml">
-                <form string="Categoría de Productos">
+                <form string="Categoria de Productos">
                     <sheet>
                         <group>
                             <field name="name" />
@@ -43,7 +43,7 @@
                             <field name="parent_id" options="{'no_create': True}" />
                         </group>
                         <notebook>
-                            <page string="Subcategorías"
+                            <page string="Subcategorias"
                                 attrs="{'invisible': [('parent_id', '=', False)]}">
                                 <field name="child_ids" widget="one2many_list"
                                     options="{'no_create': True, 'no_edit': True}" />

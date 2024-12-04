@@ -28,9 +28,15 @@
         <menuitem id="menu_registro_etiquetas" name="Etiquetas" parent="menu_configuracion"
             sequence="2"
             action="action_etiqueta" />
-        <menuitem id="menu_registro_unidad_medida" name="Unidad de Medida" parent="menu_configuracion"
+        <menuitem id="menu_registro_unidad_medida" name="Unidad de Medida"
+            parent="menu_configuracion"
             sequence="3"
             action="action_um" />
+
+        <menuitem id="menu_rebaja" name="Rebaja" parent="menu_gestion"
+            action="action_rebaja" sequence="1" />
+        <menuitem id="menu_solicitud_rebaja" name="Solicitudes de Rebaja" parent="menu_gestion"
+            action="action_solicitud_rebaja" sequence="2" />
         <!-- <menuitem id="menu_producto" name="Productos" parent="menu_registro"
             action="action_producto" sequence="1" />
         <menuitem id="menu_lote" name="Lotes" parent="menu_registro"

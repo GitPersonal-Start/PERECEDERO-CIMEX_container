@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Gestión Perecederos CIMEX",
+    'name': "Gestion Perecederos CIMEX",
     
     'summary': """
-        Módulo para el registro y control de productos perecederos en la empresa CIMEX""",
+        Modulo para el registro y control de productos perecederos en la empresa CIMEX""",
         
     'description': """
-        Este módulo permite a la empresa CIMEX gestionar el inventario de productos perecederos,
-        controlando su fecha de caducidad, ubicación en almacén y alerta de vencimiento,
-        rebajas y otros aspectos relevantes para la gestión eficiente de productos perecederos.
+        Este modulo permite a la empresa CIMEX gestionar el inventario de productos perecederos,
+        controlando su fecha de caducidad, ubicacion y alerta de vencimiento,
+        rebajas y otros aspectos relevantes para la gestion eficiente de productos perecederos.
     """,
     
     'author': "CIMEX",
@@ -25,7 +25,7 @@
         'views/configuracion.xml',
         'views/templates.xml',
         'views/producto.xml',
-        # 'views/solicitud.xml',
+        'views/rebaja.xml',
         'views/estructura.xml',
         'views/menu.xml',
     ],
