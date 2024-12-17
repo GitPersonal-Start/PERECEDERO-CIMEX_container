@@ -10,3 +10,6 @@ access_mgpp_ubicacion_fisica,mgpp.ubicacion_fisica,model_mgpp_ubicacion_fisica,b
 access_mgpp_lote,mgpp.lote,model_mgpp_lote,base.group_user,1,1,1,1
 access_mgpp_rebaja,mgpp.rebaja,model_mgpp_rebaja,base.group_user,1,1,1,1
 access_mgpp_solicitud_rebaja,mgpp.solicitud_rebaja,model_mgpp_solicitud_rebaja,base.group_user,1,1,1,1
+access_mgpp_approval_log,mgpp.approval_log,model_mgpp_approval_log,base.group_user,1,1,1,1
+access_mgpp_fecha_validacion,mgpp.fecha_validacion,model_mgpp_fecha_validacion,base.group_user,1,1,1,1
+access_mgpp_codigo23,mgpp.codigo23,model_mgpp_codigo23,base.group_user,1,1,1,1

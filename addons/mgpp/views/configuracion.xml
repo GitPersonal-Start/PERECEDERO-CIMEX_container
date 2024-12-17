@@ -1,5 +1,5 @@
 <odoo>
-    <data>
+    <!-- <data> -->
         <!-- Acciones de Vistas -->
         <!-- Accion de Categorias-->
         <record id="action_categoria" model="ir.actions.act_window">
@@ -89,5 +89,5 @@
                 </tree>
             </field>
         </record>
-    </data>
+    <!-- </data> -->
 </odoo>

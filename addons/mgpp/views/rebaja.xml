@@ -1,193 +1,387 @@
 <odoo>
-    <data>
-        <!-- Acciones de Vistas -->
-        <!-- Accion de Rebaja -->
-        <record id="action_rebaja" model="ir.actions.act_window">
-            <field name="name">Rebajas</field>
-            <field name="res_model">mgpp.rebaja</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        <!-- Accion de Solicitud de Rebaja -->
-        <record id="action_solicitud_rebaja" model="ir.actions.act_window">
-            <field name="name">Solicitudes de Rebajas</field>
-            <field name="res_model">mgpp.solicitud_rebaja</field>
-            <field name="view_mode">tree,form,kanban</field>
-            <!-- <field name="domain">[('solicitud_valida', '=', True)]</field> -->
-        </record>
-        <!-- vista tree de Rebaja  -->
-        <record id="view_tree_rebaja" model="ir.ui.view">
-            <field name="name">view.tree.rebaja</field>
-            <field name="model">mgpp.rebaja</field>
-            <field name="arch" type="xml">
-                <tree string="Rebajas" create="false" editable="bottom">
-                    <field name="name" string="Código" />
-                    <field name="lote_id" string="Lote Asociado" />
-                    <field name="precio_inicial" string="Precio Inicial" />
-                    <field name="precio_actual" string="Precio Actual" />
-                    <field name="estado" string="Estado Actual" />
-                    <field name="descuento" string="Descuento Aplicado" />
-                    <field name="fecha_creacion" string="Creación" />
-                    <field name="fecha_finalizacion" string="Finalización" />
-                    <field name="dias_restantes" string="Días Restantes" />
-                    <button string="Ver Solicitudes" type="object" name="action_open_solicitudes"
-                        icon="fa-folder-open" />
-                </tree>
+    <!-- <data> -->
+    <!-- Acciones de Vistas -->
+    <!-- Accion de Rebaja -->
+    <record id="action_rebaja" model="ir.actions.act_window">
+        <field name="name">Rebajas</field>
+        <field name="res_model">mgpp.rebaja</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'group_by': 'producto_id'}</field>
+    </record>
+    <!-- Accion de Solicitud de Rebaja -->
+    <record id="action_solicitud_rebaja" model="ir.actions.act_window">
+        <field name="name">Solicitudes de Rebajas</field>
+        <field name="res_model">mgpp.solicitud_rebaja</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <!-- <field name="domain">[('solicitud_valida', '=', True)]</field> -->
+    </record>
+    <!-- Accion de finalizar -->
+    <record id="action_fecha_validacion" model="ir.actions.act_window">
+        <field name="name">Solicitudes Fechas Validacion</field>
+        <field name="res_model">mgpp.fecha_validacion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Accion de Codigos 23 -->
+    <record id="action_codigo23" model="ir.actions.act_window">
+        <field name="name">Codigos 23</field>
+        <field name="res_model">mgpp.codigo23</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- vista tree de Rebaja  -->
+    <record id="view_tree_rebaja" model="ir.ui.view">
+        <field name="name">view.tree.rebaja</field>
+        <field name="model">mgpp.rebaja</field>
+        <field name="arch" type="xml">
+            <tree string="Rebajas" create="false" >
+                <field name="name" string="Código" />
+                <field name="producto_id" string="Producto" />
+                <field name="lote_id" string="Lote Asociado" />
+                <field name="precio_inicial" string="Precio Inicial" />
+                <field name="precio_actual" string="Precio Actual" />
+                <field name="estado" string="Estado Actual" />
+                <field name="descuento_rebaja" string="Descuento Aplicado" />
+                <field name="fecha_creacion" string="Creación" />
+                <field name="fecha_finalizacion" string="Finalización" />
+                <field name="dias_restantes" string="Días Restantes" />
+                <button string="Ver Solicitudes" type="object" name="action_open_solicitudes"
+                    icon="fa-folder-open" />
+            </tree>
 
-            </field>
-        </record>
-        <record id="view_kanban_rebaja" model="ir.ui.view">
-            <field name="name">view.kanban.rebaja</field>
-            <field name="model">mgpp.rebaja</field>
-            <field name="arch" type="xml">
-                <kanban default_group_by="estado" create="false">
-                    <field name="name" />
-                    <field name="rebaja_id" />
-                    <field name="descuento" />
-                    <field name="precio_aplicado" />
-                    <field name="estado" />
-                    <field name="fecha_solicitud" />
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="o_kanban_card">
-                                <div class="oe_kanban_content">
-                                    <strong>Solicitud:</strong>
+        </field>
+    </record>
+    <record id="view_kanban_rebaja" model="ir.ui.view">
+        <field name="name">view.kanban.rebaja</field>
+        <field name="model">mgpp.rebaja</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="estado" create="false">
+                <field name="name" />
+                <field name="descuento_rebaja" />
+                <field name="precio_actual" />
+                <field name="estado" />
+                <field name="fecha_creacion" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="o_kanban_card">
+                            <div class="oe_kanban_content">
+                                <strong>Rebaja:</strong>
+                                <field name="name" />
+                                <div>
+                                    <strong>Descuento:</strong>
+                                    <field name="descuento_rebaja" />
+                                </div>
+                                <div>
+                                    <strong>Precio:</strong>
+                                    <field name="precio_actual" />
+                                </div>
+                                <div>
+                                    <strong>Estado:</strong>
+                                    <span t-att-class="'badge badge-' + record.estado.raw_value" />
+                                    <field name="estado" />
+                                </div>
+                                <div>
+                                    <strong>Fecha:</strong>
+                                    <field name="fecha_creacion" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!--  vista form de Rebajas -->
+    <record id="view_form_rebaja" model="ir.ui.view">
+        <field name="name">view.form.rebaja</field>
+        <field name="model">mgpp.rebaja</field>
+        <field name="arch" type="xml">
+            <form string="Rebajas">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="lote_id" />
+                            <field name="precio_inicial" />
+                            <field name="precio_actual" />
+                            <field name="descuento_rebaja" />
+                        </group>
+                        <group>
+                            <field name="estado" />
+                            <field name="fecha_creacion" />
+                            <field name="fecha_finalizacion" />
+                            <field name="fecha_modificacion" />
+                            <field name="dias_restantes" />
+                        </group>
+                        <field name="observaciones" />
+                    </group>
+                    <notebook>
+                        <page string="Solicitudes de Rebajas">
+                            <field name="solicitudes_ids">
+                                <tree>
                                     <field name="name" />
-                                    <div>
-                                        <strong>Descuento:</strong>
-                                        <field name="descuento" />
-                                    </div>
-                                    <div>
-                                        <strong>Precio:</strong>
-                                        <field name="precio_aplicado" />
-                                    </div>
-                                    <div>
-                                        <strong>Estado:</strong>
-                                        <span t-att-class="'badge badge-' + record.estado.raw_value" />
-                                        <field name="estado" />
-                                    </div>
-                                    <div>
-                                        <strong>Fecha:</strong>
-                                        <field name="fecha_solicitud" />
-                                    </div>
+                                    <field name="descuento_rebaja" />
+                                    <field name="precio_aplicado" />
+                                    <field name="estado" />
+                                    <field name="fechas_validacion" />
+                                    <field name="fechas_vencimiento" />
+                                    <field name="fecha_solicitud" />
+                                    <button name="action_solicitar" type="object"
+                                        string="Solicitar" class="oe_highlight"
+                                        attrs="{'invisible': [('estado', '!=', 'pendiente')]}" />
+                                    <button name="action_cancelar_solicitud" type="object"
+                                        string="Cancelar Solicitud" class="btn-primary"
+                                        attrs="{'invisible': [('estado', '!=', 'solicitado')]}" />
+                                    <button name="action_marcar_revisada" type="object"
+                                        string="Revisar" class="btn-secondary"
+                                        attrs="{'invisible': [('estado', '!=', 'solicitado')]}" />
+                                    <button name="action_cancelar_revision" type="object"
+                                        string="Cancelar Revisión" class="btn-danger"
+                                        attrs="{'invisible': [('estado', '!=', 'revisada')]}" />
+                                </tree>
+                            </field>
+                            <button name="action_crear_solicitud" type="object"
+                                string="Crear Solicitud" class="oe_highlight" />
+                            <button name="action_solicitar_todas" type="object"
+                                string="Solicitar Todas" class="btn-primary" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_solicitud_rebaja_tree" model="ir.ui.view">
+        <field name="name">solicitud.rebaja.tree</field>
+        <field name="model">mgpp.solicitud_rebaja</field>
+        <field name="arch" type="xml">
+            <tree string="Solicitudes de Rebaja" decoration-info="estado == 'aprobado'"
+                decoration-danger="estado == 'pendiente_aprobacion'">
+                <field name="rebaja_id" string="Rebaja" />
+                <field name="name" string="Codigo" />
+                <field name="descuento_rebaja" string="Descuento" />
+                <field name="precio_aplicado" string="Precio Aplicado" />
+                <field name="estado" string="Estado" />
+                <field name="fechas_validacion" string="fechas validacion" />
+                <field name="fechas_vencimiento" string="fechas vencimiento" />
+                <field name="fecha_solicitud" string="Fecha de Solicitud" />
+                <field name="total_aprobaciones" readonly="1" />
+                <button name="action_aprobar" type="object" string="Aprobar"
+                    class="btn-primary"
+                    attrs="{'invisible': [('estado', 'not in', ['revisada'])]}" />
+                <button name="action_cancelar_aprobacion" type="object"
+                    string="Cancelar Aprobación"
+                    class="btn-secondary"
+                    attrs="{'invisible': [('estado', 'not in', ['pendiente_aprobacion'])]}" />
+
+            </tree>
+        </field>
+    </record>
+    <record id="action_solicitud_rebaja" model="ir.actions.act_window">
+        <field name="name">Solicitudes Revisadas</field>
+        <field name="res_model">mgpp.solicitud_rebaja</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('estado', 'in', ['revisada', 'pendiente_aprobacion',
+            'aprobado'])]</field>
+        <field name="context">{'group_by': 'rebaja_id'}</field>
+    </record>
+    <record id="view_solicitud_rebaja_form" model="ir.ui.view">
+        <field name="name">solicitud.rebaja.form</field>
+        <field name="model">mgpp.solicitud_rebaja</field>
+        <field name="arch" type="xml">
+            <form string="Solicitud de Rebaja">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="rebaja_id" />
+                        <field name="descuento_rebaja" />
+                        <field name="precio_aplicado" />
+                        <field name="fechas_validacion" string="fechas validacion" />
+                        <field name="fechas_vencimiento" string="fechas vencimiento" />
+                        <field name="estado" />
+                        <field name="total_aprobaciones" readonly="1" />
+                    </group>
+                    <group>
+                        <field name="usuarios_aprobadores" widget="many2many_tags" readonly="1"
+                            string="Usuarios Aprobadores" />
+                    </group>
+                    <group>
+                        <progressbar string="Aprobaciones" value="total_aprobaciones"
+                            max_value="3" />
+                    </group>
+                    <group>
+                        <button name="action_aprobar" type="object" string="Aprobar"
+                            class="btn-primary"
+                            attrs="{'invisible': [('estado', 'not in', ['revisada'])]}" />
+                        <button name="action_cancelar_aprobacion" type="object"
+                            string="Cancelar Aprobación"
+                            class="btn-secondary"
+                            attrs="{'invisible': [('estado', 'not in', ['pendiente_aprobacion'])]}" />
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_solicitud_rebaja_kanban" model="ir.ui.view">
+        <field name="name">solicitud.rebaja.kanban</field>
+        <field name="model">mgpp.solicitud_rebaja</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_example" default_group_by="estado" create="false">
+                <field name="name" string="Codigo" />
+                <field name="rebaja_id" string="Rebaja" />
+                <field name="descuento_rebaja" string="Descuento" />
+                <field name="precio_aplicado" string="Precio Aplicado" />
+                <field name="estado" string="Estado" />
+                <field name="fecha_solicitud" string="Fecha de Solicitud" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-att-class="'o_kanban_record'" class="o_kanban_card">
+                            <div class="o_kanban_primary_left">
+                                <field name="name" class="o_field_char" />
+                                <div>
+                                    <strong>Descuento:</strong>
+                                    <field name="descuento_rebaja" />
+                                </div>
+                                <div>
+                                    <strong>Precio Aplicado:</strong>
+                                    <field name="precio_aplicado" />
+                                </div>
+                                <div>
+                                    <strong>Estado:</strong>
+                                    <field name="estado" />
                                 </div>
                             </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-        <!--  vista form de Rebajas -->
-        <record id="view_form_rebaja" model="ir.ui.view">
-            <field name="name">view.form.rebaja</field>
-            <field name="model">mgpp.rebaja</field>
-            <field name="arch" type="xml">
-                <form string="Rebajas">
-                    <sheet>
-                        <group>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!-- vista tree de finalizacion  -->
+    <record id="view_tree_fecha_validacion" model="ir.ui.view">
+        <field name="name">fecha.validacion.tree</field>
+        <field name="model">mgpp.fecha_validacion</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="fechas_validacion" />
+                <field name="cantidad_solicitudes" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_form_fecha_validacion" model="ir.ui.view">
+        <field name="name">fecha.validacion.form</field>
+        <field name="model">mgpp.fecha_validacion</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="fechas_validacion" />
+                        <field name="cantidad_solicitudes" readonly="1" />
+                    </group>
+                    <notebook>
+                        <page string="Solicitudes Asociadas">
+                            <field name="solicitudes_ids">
+                                <tree>
+                                    <field name="name" />
+                                    <field name="fechas_vencimiento" />
+                                    <field name="estado" />
+                                    <field name="descuento_rebaja" />
+                                    <!-- Otros campos relevantes de SolicitudRebaja -->
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_tree_codigo23" model="ir.ui.view">
+        <field name="name">codigo23.tree</field>
+        <field name="model">mgpp.codigo23</field>
+        <field name="arch" type="xml">
+            <tree string="Código 23">
+                <field name="name" />
+                <field name="fecha_validacion_id" />
+                <field name="valid_fecha_ids" invisible="1" />
+                <field name="cantidad_solicitudes" />
+            </tree>
+        </field>
+    </record>
+    <!-- <record id="view_form_codigo23" model="ir.ui.view">
+        <field name="name">codigo23.form</field>
+        <field name="model">mgpp.codigo23</field>
+        <field name="arch" type="xml">
+            <form string="Código 23">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="fecha_validacion_id" />
+                        <field name="valid_fecha_ids" invisible="1"/>
+                        <field name="estado" widget="statusbar" />
+                        <field name="cantidad_solicitudes" readonly="1" />
+                    </group>
+                    <notebook>
+                        <page string="Solicitudes Asociadas">
+                            <field name="solicitudes_ids">
+                                <tree>
+                                    <field name="name" />
+                                    <field name="fecha_solicitud" />
+                                    <field name="estado" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+    <record id="view_form_codigo23" model="ir.ui.view">
+        <field name="name">codigo23.form</field>
+        <field name="model">mgpp.codigo23</field>
+        <field name="arch" type="xml">
+            <form string="Código 23" class="oe_form_custom">
+                <sheet>
+                    <!-- Cabecera con nombre y estado -->
+                    <header>
+                        <field name="estado" widget="statusbar" options="{'clickable': False}" />
+                    </header>
+                    <!-- Información principal -->
+                    <group string="Información del Código 23" col="4">
+                        <field name="name" class="oe_inline" />
+                        <field name="fecha_validacion_id" />
+                        <field name="cantidad_solicitudes" readonly="1" />
+                        <field name="valid_fecha_ids" invisible="1" />
+                    </group>
+                    <!-- Sección con detalles -->
+                    <notebook>
+                        <page string="Solicitudes Asociadas">
+                            <field name="solicitudes_ids" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="name" string="Solicitud" />
+                                    <field name="fecha_solicitud" string="Fecha de Solicitud" />
+                                    <field name="estado" string="Estado" />
+                                </tree>
+                            </field>
+                        </page>
+                        <!-- <page string="Información Adicional">
                             <group>
-                                <field name="name" />
-                                <field name="lote_id" />
-                                <field name="precio_inicial" />
-                                <field name="precio_actual" />
-                                <field name="descuento" />
+                                <field name="estado" string="Estado Actual" />
+                                <field name="fecha_validacion_id" readonly="1" />
                             </group>
-                            <group>
-                                <field name="estado" />
-                                <field name="fecha_creacion" />
-                                <field name="fecha_finalizacion" />
-                                <field name="fecha_modificacion" />
-                                <field name="dias_restantes" />
-                            </group>
-                            <field name="observaciones" />
-                        </group>
-                        <notebook>
-                            <page string="Solicitudes de Rebajas">
-                                <field name="solicitudes_ids">
-                                    <tree>
-                                        <field name="name" />
-                                        <field name="descuento" />
-                                        <field name="precio_aplicado" />
-                                        <field name="estado" />
-                                        <field name="fecha_solicitud" />
-                                    </tree>
-                                </field>
-                                <button name="action_crear_solicitud" type="object" string="Crear Solicitud" class="oe_highlight" />
-                            </page>
-                        </notebook>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-        <record id="view_solicitud_rebaja_tree" model="ir.ui.view">
-            <field name="name">solicitud.rebaja.tree</field>
-            <field name="model">mgpp.solicitud_rebaja</field>
-            <field name="arch" type="xml">
-                <tree string="Solicitudes de Rebaja">
-                    <field name="name" string="Codigo" />
-                    <field name="descuento" string="Descuento" />
-                    <field name="precio_aplicado" string="Precio Aplicado" />
-                    <field name="estado" string="Estado" />
-                    <field name="fecha_solicitud" string="Fecha de Solicitud" />
-                </tree>
-            </field>
-        </record>
-        <record id="view_solicitud_rebaja_form" model="ir.ui.view">
-            <field name="name">solicitud.rebaja.form</field>
-            <field name="model">mgpp.solicitud_rebaja</field>
-            <field name="arch" type="xml">
-                <form string="Solicitudes de Rebajas">
-                    <sheet>
-                        <group>
-                            <group>
-                                <field name="name" />
-                                <field name="rebaja_id" />
-                                <field name="descuento" />
-                            </group>
-                            <group>
-                                <field name="precio_aplicado" />
-                                <field name="estado" />
-                                <field name="fecha_solicitud" />
-                            </group>
-                            <field name="observaciones" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-        <record id="view_solicitud_rebaja_kanban" model="ir.ui.view">
-            <field name="name">solicitud.rebaja.kanban</field>
-            <field name="model">mgpp.solicitud_rebaja</field>
-            <field name="arch" type="xml">
-                <kanban class="o_kanban_example" default_group_by="estado" create="false">
-                    <field name="name" string="Codigo" />
-                    <field name="rebaja_id" string="Rebaja" />
-                    <field name="descuento" string="Descuento" />
-                    <field name="precio_aplicado" string="Precio Aplicado" />
-                    <field name="estado" string="Estado" />
-                    <field name="fecha_solicitud" string="Fecha de Solicitud" />
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div t-att-class="'o_kanban_record'" class="o_kanban_card">
-                                <div class="o_kanban_primary_left">
-                                    <field name="name" class="o_field_char" />
-                                    <div>
-                                        <strong>Descuento:</strong>
-                                        <field name="descuento" />
-                                    </div>
-                                    <div>
-                                        <strong>Precio Aplicado:</strong>
-                                        <field name="precio_aplicado" />
-                                    </div>
-                                    <div>
-                                        <strong>Estado:</strong>
-                                        <field name="estado" />
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-    </data>
+                        </page> -->
+                    </notebook>
+                </sheet>
+                <!-- <footer>
+                    <button string="Validar" type="object" name="action_validar"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('estado', '!=', 'sin_aplicar')]}" />
+                    <button string="Cancelar" type="object" name="action_cancelar"
+                        class="oe_secondary" attrs="{'invisible': [('estado', '=', 'aplicado')]}" />
+                </footer> -->
+            </form>
+        </field>
+    </record>
+
+
+    <!-- </data> -->
 </odoo>

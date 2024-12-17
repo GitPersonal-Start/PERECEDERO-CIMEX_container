@@ -1,5 +1,5 @@
 <odoo>
-    <data>
+    <!-- <data> -->
 <!--
         <template id="listing">
           <ul>
@@ -20,5 +20,5 @@
           </dl>
         </template>
 -->
-    </data>
+    <!-- </data> -->
 </odoo>

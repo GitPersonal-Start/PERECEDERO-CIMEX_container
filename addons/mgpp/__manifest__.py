@@ -15,7 +15,7 @@
     'website': "https://www.yourcompany.com",
     'category': 'Inventory',
     'version': '1.0',
-    'depends': ['base'],
+    'depends': ['base','mail'],
     'images': ['static/description/icon.png'],
 
     # always loaded
@@ -27,6 +27,7 @@
         'views/producto.xml',
         'views/rebaja.xml',
         'views/estructura.xml',
+        # 'views/codigo.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode

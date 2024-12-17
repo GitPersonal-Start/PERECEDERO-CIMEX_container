@@ -1,5 +1,5 @@
 <odoo>
-    <data>
+    <!-- <data> -->
         <!-- Acciones de Vistas -->
         <!-- Accion de Producto -->
         <record id="action_producto" model="ir.actions.act_window">
@@ -116,7 +116,7 @@
                                     <group>
                                         <field name="etiqueta_ids" widget="many2many_tags"/>
                                         <field name="unidad_medida" />
-                                        <field name="categoria" />
+                                        <field name="categoria" readonly="1"/>
                                     </group>
                                     <group>
                                         <field name="cantidad" />
@@ -154,5 +154,5 @@
                 </form>
             </field>
         </record>
-    </data>
+    <!-- </data> -->
 </odoo>

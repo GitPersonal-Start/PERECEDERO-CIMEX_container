@@ -1,5 +1,5 @@
 <odoo>
-    <data>
+    <!-- <data> -->
         <!-- Acciones de Vistas -->
         <!-- Accion de Empresa-->
         <record id="action_empresa" model="ir.actions.act_window">
@@ -97,5 +97,5 @@
                 </form>
             </field>
         </record>
-    </data>
+    <!-- </data> -->
 </odoo>
