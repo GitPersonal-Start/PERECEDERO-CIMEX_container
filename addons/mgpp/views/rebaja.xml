@@ -32,7 +32,7 @@
         <field name="name">view.tree.rebaja</field>
         <field name="model">mgpp.rebaja</field>
         <field name="arch" type="xml">
-            <tree string="Rebajas" create="false" >
+            <tree string="Rebajas" create="false">
                 <field name="name" string="Código" />
                 <field name="producto_id" string="Producto" />
                 <field name="lote_id" string="Lote Asociado" />
@@ -303,38 +303,13 @@
                 <field name="name" />
                 <field name="fecha_validacion_id" />
                 <field name="valid_fecha_ids" invisible="1" />
+                <field name="estado" />
                 <field name="cantidad_solicitudes" />
+                <button string="Aplicar Circular" type="object" name="aplicar_circular"
+                    attrs="{'invisible': [('estado', '!=', 'sin_aplicar')]}" class="btn-primary" />
             </tree>
         </field>
     </record>
-    <!-- <record id="view_form_codigo23" model="ir.ui.view">
-        <field name="name">codigo23.form</field>
-        <field name="model">mgpp.codigo23</field>
-        <field name="arch" type="xml">
-            <form string="Código 23">
-                <sheet>
-                    <group>
-                        <field name="name" />
-                        <field name="fecha_validacion_id" />
-                        <field name="valid_fecha_ids" invisible="1"/>
-                        <field name="estado" widget="statusbar" />
-                        <field name="cantidad_solicitudes" readonly="1" />
-                    </group>
-                    <notebook>
-                        <page string="Solicitudes Asociadas">
-                            <field name="solicitudes_ids">
-                                <tree>
-                                    <field name="name" />
-                                    <field name="fecha_solicitud" />
-                                    <field name="estado" />
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-                </sheet>
-            </form>
-        </field>
-    </record> -->
     <record id="view_form_codigo23" model="ir.ui.view">
         <field name="name">codigo23.form</field>
         <field name="model">mgpp.codigo23</field>
@@ -343,6 +318,7 @@
                 <sheet>
                     <!-- Cabecera con nombre y estado -->
                     <header>
+
                         <field name="estado" widget="statusbar" options="{'clickable': False}" />
                     </header>
                     <!-- Información principal -->
@@ -352,6 +328,8 @@
                         <field name="cantidad_solicitudes" readonly="1" />
                         <field name="valid_fecha_ids" invisible="1" />
                     </group>
+                    <button string="Aplicar Circular" type="object" name="aplicar_circular"
+                        attrs="{'invisible': [('estado', '!=', 'sin_aplicar')]}" class="btn-primary" />
                     <!-- Sección con detalles -->
                     <notebook>
                         <page string="Solicitudes Asociadas">
@@ -363,21 +341,13 @@
                                 </tree>
                             </field>
                         </page>
-                        <!-- <page string="Información Adicional">
-                            <group>
-                                <field name="estado" string="Estado Actual" />
-                                <field name="fecha_validacion_id" readonly="1" />
-                            </group>
-                        </page> -->
+
                     </notebook>
+                    <footer>
+
+                    </footer>
                 </sheet>
-                <!-- <footer>
-                    <button string="Validar" type="object" name="action_validar"
-                        class="oe_highlight"
-                        attrs="{'invisible': [('estado', '!=', 'sin_aplicar')]}" />
-                    <button string="Cancelar" type="object" name="action_cancelar"
-                        class="oe_secondary" attrs="{'invisible': [('estado', '=', 'aplicado')]}" />
-                </footer> -->
+
             </form>
         </field>
     </record>

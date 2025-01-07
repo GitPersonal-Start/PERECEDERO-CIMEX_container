@@ -18,7 +18,7 @@ class Rebaja(models.Model):
         ('rebajado', 'Rebajado')
     ], string='Estado', default='pendiente', required=True, readonly=True)
     descuento_rebaja = fields.Integer(default='0', string='Descuento', readonly=True)
-    solicitudes_ids = fields.One2many('mgpp.solicitud_rebaja', 'rebaja_id', string='Solicitudes de Rebaja', readonly=True)
+    solicitudes_ids = fields.One2many('mgpp.solicitud_rebaja', 'rebaja_id', string='Solicitudes de Rebaja', readonly=True, ondelete='cascade')
     fecha_creacion = fields.Date(string='Fecha de Creación', default=fields.Date.today, readonly=True)
     fecha_finalizacion = fields.Date(string='Fecha de Finalización', required=True, readonly=True)
     dias_restantes = fields.Integer(string='Días Restantes', compute='_compute_dias_restantes', store=True, readonly=True)
@@ -132,13 +132,13 @@ class SolicitudRebaja(models.Model):
 
     fecha_validacion_id = fields.Many2one('mgpp.fecha_validacion', string="Fecha de Validación", ondelete='cascade')
     approval_log_ids = fields.One2many(
-        'mgpp.approval_log', 'solicitud_id', string="Historial de Aprobaciones"
+        'mgpp.approval_log', 'solicitud_id', string="Historial de Aprobaciones", ondelete='cascade'
     )
     name = fields.Char(string='Código de Solicitud', required=True)
     codigo_23 = fields.Char(string='Código 23')
     codigo_23_aplicado = fields.Boolean(string='Código 23 Aplicado', default=False)
     rebaja_id = fields.Many2one(
-        'mgpp.rebaja', string='Rebaja', required=True, ondelete='cascade'
+        'mgpp.rebaja', string='Rebaja', required=True
     )
     descuento_rebaja = fields.Integer(string='Descuento')
     precio_aplicado = fields.Float(string='Precio Aplicado', required=True, readonly=True)

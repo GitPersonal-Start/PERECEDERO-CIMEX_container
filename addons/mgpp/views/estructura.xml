@@ -1,8 +1,319 @@
 <odoo>
-    <!-- <data> -->
+    <data>
+        <!-- Acciones de Vistas -->
+        <!-- Accion de Sucursal-->
+        <record id="action_sucursal" model="ir.actions.act_window">
+            <field name="name">Sucursal</field>
+            <field name="res_model">mgpp.sucursal</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Accion de Complejo-->
+        <record id="action_complejo" model="ir.actions.act_window">
+            <field name="name">Complejo</field>
+            <field name="res_model">mgpp.complejo</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Accion de Establecimiento-->
+        <record id="action_establecimiento" model="ir.actions.act_window">
+            <field name="name">Establecimiento</field>
+            <field name="res_model">mgpp.establecimiento</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_miempresa" model="ir.actions.act_window">
+            <field name="name">Empresa</field>
+            <field name="res_model">mgpp.miempresa</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- # Vistas para la clase Sucursal  -->
+        <record id="view_tree_sucursal" model="ir.ui.view">
+            <field name="name">sucursal.tree</field>
+            <field name="model">mgpp.sucursal</field>
+            <field name="arch" type="xml">
+                <tree string="Sucursales">
+                    <field name="name" />
+                    <field name="codigo" />
+                    <field name="municipio" />
+                    <field name="provincia" />
+                    <field name="empleados_count" string="Número de Complejos" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_form_sucursal" model="ir.ui.view">
+            <field name="name">sucursal.form</field>
+            <field name="model">mgpp.sucursal</field>
+            <field name="arch" type="xml">
+                <form string="Sucursal">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Nombre de la Sucursal" />
+                            <h1>
+                                <field name="name" placeholder="Ejemplo: Sucursal Matanzas" />
+                            </h1>
+                        </div>
+                        <group string="Información General" colspan="4">
+                            <group>
+                                <field name="codigo" widget="char"
+                                    placeholder="Ejemplo: SUC-MTZ-001" />
+                                <field name="telefono" widget="phone" placeholder="+53 123 456 78" />
+                            </group>
+                            <group>
+                                <field name="correo" widget="email"
+                                    placeholder="ejemplo@sucursal.com" />
+                                <field name="estado" />
+                            </group>
+                            <group colspan="4">
+                                <field name="descripcion" widget="html"
+                                    placeholder="Ingrese una descripción detallada aquí..." />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Dirección">
+                                <group>
+                                    <group>
+                                        <field name="calle" />
+                                        <field name="calle2" />
+                                        <field name="numero" />
+                                    </group>
+                                    <group>
+                                        <field name="municipio" />
+                                        <field name="provincia" />
+                                        <field name="codigo_postal" />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Complejos">
+                                <field name="complejos_ids"
+                                    context="{'default_sucursal_id': active_id}">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="codigo" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Usuarios">
+                                <field name="usuario_ids" widget="many2many_tags"
+                                    options="{'no_create': True}" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- # Vistas para la clase Complejo  -->
+        <record id="view_tree_complejo" model="ir.ui.view">
+            <field name="name">complejo.tree</field>
+            <field name="model">mgpp.complejo</field>
+            <field name="arch" type="xml">
+                <tree string="Complejos">
+                    <field name="name" />
+                    <field name="codigo" />
+                    <field name="sucursal_id" />
+                    <field name="empleados_count" string="Número de Establecimientos" />
+                </tree>
+            </field>
+        </record>
+        <record id="view_form_complejo" model="ir.ui.view">
+            <field name="name">complejo.form</field>
+            <field name="model">mgpp.complejo</field>
+            <field name="arch" type="xml">
+                <form string="Complejo">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Nombre del Complejo" />
+                            <h1>
+                                <field name="name" placeholder="Ejemplo: Complejo Habana Centro" />
+                            </h1>
+                        </div>
+                        <group string="Información General" colspan="4">
+                            <group>
+                                <field name="sucursal_id" />
+                                <field name="codigo" widget="char"
+                                    placeholder="Ejemplo: COM-HBN-001" />
+                                <field name="telefono" widget="phone" placeholder="+53 123 456 78" />
+                            </group>
+                            <group>
+                                <field name="correo" widget="email"
+                                    placeholder="ejemplo@complejo.com" />
+                                <field name="estado" />
+                            </group>
+                            <group colspan="4">
+                                <field name="descripcion" widget="html"
+                                    placeholder="Ingrese una descripción detallada aquí..." />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Dirección">
+                                <group>
+                                    <group>
+                                        <field name="calle" />
+                                        <field name="calle2" />
+                                        <field name="numero" />
+                                    </group>
+                                    <group>
+                                        <field name="municipio" />
+                                        <field name="provincia" />
+                                        <field name="codigo_postal" />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Establecimientos">
+                                <field name="establecimientos_ids">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="codigo" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Usuarios">
+                                <field name="usuario_ids" widget="many2many_tags" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- # Vistas para la clase Establecimiento -->
+        <record id="view_tree_establecimiento"
+            model="ir.ui.view">
+            <field name="name">establecimiento.tree</field>
+            <field name="model">mgpp.establecimiento</field>
+            <field name="arch" type="xml">
+                <tree string="Establecimientos">
+                    <field name="name" />
+                    <field name="codigo" />
+                    <field name="complejo_id" />
+                    <field name="empleados_count" string="Número de Áreas" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_form_establecimiento" model="ir.ui.view">
+            <field name="name">establecimiento.form</field>
+            <field name="model">mgpp.establecimiento</field>
+            <field name="arch" type="xml">
+                <form string="Establecimiento">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Nombre del Establecimiento" />
+                            <h1>
+                                <field name="name" placeholder="Ejemplo: Establecimiento Central" />
+                            </h1>
+                        </div>
+                        <group string="Información General" colspan="4">
+                            <group>
+                                <field name="complejo_id" />
+                                <field name="codigo" widget="char"
+                                    placeholder="Ejemplo: EST-HBN-001" />
+                                <field name="telefono" widget="phone" placeholder="+53 123 456 78" />
+                            </group>
+                            <group>
+                                <field name="correo" widget="email"
+                                    placeholder="ejemplo@establecimiento.com" />
+                                <field name="estado" />
+                            </group>
+                            <group colspan="4">
+                                <field name="descripcion" widget="html"
+                                    placeholder="Ingrese una descripción detallada aquí..." />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Dirección">
+                                <group>
+                                    <group>
+                                        <field name="calle" />
+                                        <field name="calle2" />
+                                        <field name="numero" />
+                                    </group>
+                                    <group>
+                                        <field name="municipio" />
+                                        <field name="provincia" />
+                                        <field name="codigo_postal" />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Áreas">
+                                <field name="areas_ids"
+                                    context="{'default_establecimiento_id': active_id}">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="codigo" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Usuarios">
+                                <field name="usuario_ids" widget="many2many_tags" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_form_area" model="ir.ui.view">
+            <field name="name">area.form</field>
+            <field name="model">mgpp.area</field>
+            <field name="arch" type="xml">
+                <form string="Área">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Nombre del Área" />
+                            <h1>
+                                <field name="name" placeholder="Ejemplo: Área de Perecederos" />
+                            </h1>
+                        </div>
+                        <group string="Información General" col="2">
+                            <field name="codigo" />
+                            <field name="estado" widget="statusbar" options="{'clickable': '1'}" />
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <odoo>
+            <record id="view_miempresa_form" model="ir.ui.view">
+                <field name="name">mgpp.miempresa.form</field>
+                <field name="model">mgpp.miempresa</field>
+                <field name="arch" type="xml">
+                    <form string="Empresa">
+                        <sheet>
+                            <group>
+                                <field name="name" readonly="1" string="Nombre de la Empresa" />
+                                <field name="complejo_id" readonly="1" string="Complejo" />
+                                <field name="estado" readonly="1" string="Estado" />
+                            </group>
+                            <notebook>
+                                <page string="Circulares de Precios">
+                                    <field name="circular_precios_ids" mode="tree"
+                                        context="{'default_miempresa_id': active_id}">
+                                        <tree string="Circulares de Precios">
+                                            <field name="name" string="Circular" />
+                                            <field name="lote_name" string="Lote" />
+                                            <field name="lote_producto" string="Producto" />
+                                            <field name="solicitud_codigo" string="Código de Solicitud" />
+                                            <field name="solicitud_descuento" string="Descuento (%)" />
+                                            <field name="solicitud_precio_aplicado" string="Precio Aplicado" />
+                                            <field name="estado" string="Estado Circular" />
+                                            <field name="fecha_emision" string="Fecha Emision" />
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+        </odoo>
+
         <!-- Acciones de Vistas -->
         <!-- Accion de Empresa-->
-        <record id="action_empresa" model="ir.actions.act_window">
+        <!-- <record id="action_empresa" model="ir.actions.act_window">
             <field name="name">Empresa</field>
             <field name="res_model">mgpp.empresa</field>
             <field name="view_mode">tree,form</field>
@@ -70,7 +381,8 @@
                                     </group>
                                 </group>
                             </page>
-                            <page string="Establecimientos Relacionados" attrs="{'invisible': [('tipo_empresa', '!=', 'complejo')]}">
+                            <page string="Establecimientos Relacionados" attrs="{'invisible': [('tipo_empresa', '!=',
+        'complejo')]}">
                                 <field name="empresas_hijas_ids">
                                     <tree>
                                         <field name="name" />
@@ -83,7 +395,8 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Areas del Establecimiento" attrs="{'invisible': [('tipo_empresa', '!=', 'establecimiento')]}">
+                            <page string="Areas del Establecimiento" attrs="{'invisible': [('tipo_empresa', '!=',
+        'establecimiento')]}">
                                 <field name="areas_ids">
                                     <tree editable="bottom">
                                         <field name="name" />
@@ -96,6 +409,6 @@
                     </sheet>
                 </form>
             </field>
-        </record>
-    <!-- </data> -->
+        </record> -->
+    </data>
 </odoo>
