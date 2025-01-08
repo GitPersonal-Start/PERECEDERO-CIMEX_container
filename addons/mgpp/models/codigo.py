@@ -91,23 +91,41 @@ class Codigo23(models.Model):
             
             
             
-            
-            
-            
-            
-    def enviar_circular_a_complejos(self):
-        """Envía una circular con el Código 23 a los complejos relacionados."""
+    def enviar_circular_a_establecimientos(self):
         for record in self:
-            # Obtener complejos relacionados con las solicitudes
-            complejos = record.solicitudes_ids.mapped('lote_id.ubicacion_lote_ids.complejo_id')
+            # Obtener ubicaciones de lote relacionadas con las solicitudes
+            ubicaciones = record.solicitudes_ids.mapped('lote_id.ubicacion_lote_ids')
             
-            for complejo in complejos:
-                self.env['mgpp.circular'].create({
-                    'name': f"Circular para {complejo.name} - {record.name}",
+            # Crear circulares para cada establecimiento
+            for ubicacion in ubicaciones:
+                circular_vals = {
+                    'name': f"Circular para {ubicacion.establecimiento_id.name} - {record.name}",
                     'codigo23_id': record.id,
-                    'complejo_id': complejo.id,
-                })
-                
+                    'complejo_id': ubicacion.complejo_id.id,
+                    'establecimiento_id': ubicacion.establecimiento_id.id,
+                    'sucursal_id': ubicacion.complejo_id.sucursal_id.id,  # Asumiendo que el Complejo tiene relación con Sucursal
+                }
+                self.env['mgpp.circular'].create(circular_vals)
+        
+            
+            
+            
+            
+            
+            
+    # def enviar_circular_a_complejos(self):
+    #     """Envía una circular con el Código 23 a los complejos relacionados."""
+    #     for record in self:
+    #         # Obtener complejos relacionados con las solicitudes
+    #         complejos = record.solicitudes_ids.mapped('lote_id.ubicacion_lote_ids.complejo_id')
+            
+    #         for complejo in complejos:
+    #             self.env['mgpp.circular'].create({
+    #                 'name': f"Circular para {complejo.name} - {record.name}",
+    #                 'codigo23_id': record.id,
+    #                 'complejo_id': complejo.id,
+    #             })
+    
                 
                 
                 
@@ -151,7 +169,33 @@ class Circular(models.Model):
     name = fields.Char(string="Título", required=True)
     codigo23_id = fields.Many2one('mgpp.codigo23', string="Código 23", required=True, ondelete='cascade')
     complejo_id = fields.Many2one('mgpp.complejo', string="Complejo", required=True, ondelete='cascade')
-    fecha_envio = fields.Datetime(string="Fecha de Envío", default=fields.Datetime.now)       
+    establecimiento_id = fields.Many2one('mgpp.establecimiento', string="Establecimiento", required=True, ondelete='cascade')
+    sucursal_id = fields.Many2one('mgpp.sucursal', string="Sucursal", required=True, ondelete='cascade')
+    fecha_envio = fields.Datetime(string="Fecha de Envío", default=fields.Datetime.now) 
+    
+    @api.model
+    def get_circular_domain(self):
+        """Construye un dominio dinámico basado en el usuario conectado."""
+        user = self.env.user
+        domain = []
+
+        # Buscar la sucursal, complejo, o establecimiento al que pertenece el usuario
+        sucursal = self.env['mgpp.sucursal'].search([('usuario_ids', 'in', [user.id])], limit=1)
+        if sucursal:
+            # Usuario pertenece a una Sucursal
+            domain = [('sucursal_id', '=', sucursal.id)]
+        else:
+            complejo = self.env['mgpp.complejo'].search([('usuario_ids', 'in', [user.id])], limit=1)
+            if complejo:
+                # Usuario pertenece a un Complejo
+                domain = [('complejo_id', '=', complejo.id)]
+            else:
+                establecimiento = self.env['mgpp.establecimiento'].search([('usuario_ids', 'in', [user.id])], limit=1)
+                if establecimiento:
+                    # Usuario pertenece a un Establecimiento
+                    domain = [('establecimiento_id', '=', establecimiento.id)]
+
+        return domain  
 # class CircularPrecios(models.Model):
 #     _name = 'mgpp.circular_precios'
 #     _description = 'Circular de Precios'

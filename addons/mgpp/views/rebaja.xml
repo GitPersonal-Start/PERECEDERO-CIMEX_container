@@ -27,6 +27,18 @@
         <field name="res_model">mgpp.codigo23</field>
         <field name="view_mode">tree,form</field>
     </record>
+
+    <record id="action_circulars" model="ir.actions.act_window">
+        <field name="name">Circulares</field>
+        <field name="res_model">mgpp.circular</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">
+            [([('sucursal_id', '=', user.sucursal_id.id)) if user.sucursal_id else
+            (['('complejo_id', '=', user.complejo_id.id)) if user.complejo_id else
+            ('establecimiento_id', '=', user.establecimiento_id.id)]
+        </field>
+    </record>
+
     <!-- vista tree de Rebaja  -->
     <record id="view_tree_rebaja" model="ir.ui.view">
         <field name="name">view.tree.rebaja</field>
@@ -352,24 +364,20 @@
         </field>
     </record>
     <record id="view_circular_tree" model="ir.ui.view">
-        <field name="name">mgpp.circular.tree</field>
-        <field name="model">mgpp.circular</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="name" />
-                <field name="codigo23_id" />
-                <field name="complejo_id" />
-                <field name="fecha_envio" />
-            </tree>
-        </field>
-    </record>
+    <field name="name">mgpp.circular.tree</field>
+    <field name="model">mgpp.circular</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="codigo23_id"/>
+            <field name="complejo_id"/>
+            <field name="establecimiento_id"/>
+            <field name="sucursal_id"/>
+            <field name="fecha_envio"/>
+        </tree>
+    </field>
+</record>
 
-    <record id="view_circular_action" model="ir.actions.act_window">
-        <field name="name">Circulares</field>
-        <field name="res_model">mgpp.circular</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('complejo_id.usuario_ids', 'in', [user.id])]</field>
-    </record>
     <record id="view_circular_form" model="ir.ui.view">
         <field name="name">mgpp.circular.form</field>
         <field name="model">mgpp.circular</field>
