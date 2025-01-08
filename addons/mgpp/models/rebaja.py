@@ -87,6 +87,7 @@ class Rebaja(models.Model):
             self.env['mgpp.solicitud_rebaja'].create({
                 'name': f"{producto_nombre} - {descuento}%",
                 'rebaja_id': rebaja.id,
+                'lote_id': rebaja.lote_id.id,
                 'descuento_rebaja': descuento,
                 'precio_aplicado': precio_aplicado,
                 'estado': 'pendiente',
@@ -103,7 +104,7 @@ class Rebaja(models.Model):
             'name': 'Solicitudes de Rebaja',
             'view_mode': 'tree,form',
             'res_model': 'mgpp.solicitud_rebaja',
-            'domain': [('id', '=', self.id)],
+            'domain': [('rebaja_id', '=', self.id)],
         }
     def action_crear_solicitud(self):
         self.ensure_one()  # Asegúrate de que solo hay una rebaja seleccionada
@@ -140,6 +141,7 @@ class SolicitudRebaja(models.Model):
     rebaja_id = fields.Many2one(
         'mgpp.rebaja', string='Rebaja', required=True
     )
+    lote_id = fields.Many2one('mgpp.lote', string='Lote', required=True, ondelete='cascade')
     descuento_rebaja = fields.Integer(string='Descuento')
     precio_aplicado = fields.Float(string='Precio Aplicado', required=True, readonly=True)
     estado = fields.Selection([
@@ -161,8 +163,7 @@ class SolicitudRebaja(models.Model):
     )
     fechas_validacion = fields.Date(string="Fecha de Validación")
     fechas_vencimiento= fields.Date(string="Fecha de Vencimiento")
-    # fecha_finalizacion_id = fields.Many2one(
-    #     'mgpp.fecha_finalizacion', string='Fecha de Finalización' )
+
     # Restricción SQL para garantizar unicidad
     _sql_constraints = [
         (
@@ -179,9 +180,6 @@ class SolicitudRebaja(models.Model):
         """
         hoy = fields.Date.today()
         for record in self:
-            # hoy = date.today()
-            
-
             # Validar rango de fecha
             if record.fechas_validacion < hoy:
                 raise ValidationError("La fecha de validación no puede ser anterior al día de hoy.")

@@ -57,7 +57,9 @@ class Codigo23(models.Model):
         compute='_compute_valid_fecha_ids',
         string="Fechas Válidas"
     )
-
+    circular_ids = fields.One2many(
+        'mgpp.circular', 'codigo23_id', string="Circulares Enviadas"
+    )
     @api.depends('fecha_validacion_id')
     def _compute_solicitudes_ids(self):
         for record in self:
@@ -85,86 +87,107 @@ class Codigo23(models.Model):
                 ('solicitudes_ids.estado', '=', 'pendiente_aprobacion')
             ]).ids
             record.valid_fecha_ids = valid_ids
+            
+            
+            
+            
+            
+            
+            
+            
+    def enviar_circular_a_complejos(self):
+        """Envía una circular con el Código 23 a los complejos relacionados."""
+        for record in self:
+            # Obtener complejos relacionados con las solicitudes
+            complejos = record.solicitudes_ids.mapped('lote_id.ubicacion_lote_ids.complejo_id')
+            
+            for complejo in complejos:
+                self.env['mgpp.circular'].create({
+                    'name': f"Circular para {complejo.name} - {record.name}",
+                    'codigo23_id': record.id,
+                    'complejo_id': complejo.id,
+                })
+                
+                
+                
+                
+                
+                
+                
     # def aplicar_circular(self):
-    #     """Crea una instancia en la clase CircularPrecios por cada solicitud y lote asociado."""
+    #     """Crea una instancia en la clase CircularPrecios por cada solicitud y lote asociado, 
+    #     vinculando con la empresa correspondiente."""
     #     circular_precios_obj = self.env['mgpp.circular_precios']
+    #     ubicacion_lote_obj = self.env['mgpp.ubicacion_lote']
+
     #     for solicitud in self.solicitudes_ids:
     #         for lote in solicitud.rebaja_id.lote_id:
+    #             # Buscar la ubicación del lote para obtener el complejo
+    #             ubicacion_lote = ubicacion_lote_obj.search([('lote_id', '=', lote.id)], limit=1)
+    #             if not ubicacion_lote:
+    #                 continue  # Si no hay ubicación asociada, omitir este lote
+                
+    #             # Encontrar la instancia de miempresa correspondiente al complejo
+    #             miempresa = self.env['mgpp.miempresa'].search([('complejo_id', '=', ubicacion_lote.complejo_id.id)], limit=1)
+    #             if not miempresa:
+    #                 continue  # Si no hay empresa asociada, omitir este lote
+                
+    #             # Crear la instancia de CircularPrecios
     #             circular_precios_obj.create({
     #                 'name': f'Circular-{self.name}',
     #                 'lote_id': lote.id,
     #                 'solicitud_rebaja_id': solicitud.id,
+    #                 'miempresa_id': miempresa.id,  # Vincular con la empresa encontrada
     #                 'fecha_emision': fields.Date.today(),
-    #                 'fecha_ejecucion': fields.Date.today() + timedelta(days=7),  # Ajustar según la lógica.
+    #                 'fecha_ejecucion': fields.Date.today() + timedelta(days=7),  # Ajustar según la lógica
     #             })
+
+    #     # Cambiar el estado de la instancia actual
     #     self.estado = 'aplicado'
-    def aplicar_circular(self):
-        """Crea una instancia en la clase CircularPrecios por cada solicitud y lote asociado, 
-        vinculando con la empresa correspondiente."""
-        circular_precios_obj = self.env['mgpp.circular_precios']
-        ubicacion_lote_obj = self.env['mgpp.ubicacion_lote']
+class Circular(models.Model):
+    _name = 'mgpp.circular'
+    _description = 'Circular para Complejos'
 
-        for solicitud in self.solicitudes_ids:
-            for lote in solicitud.rebaja_id.lote_id:
-                # Buscar la ubicación del lote para obtener el complejo
-                ubicacion_lote = ubicacion_lote_obj.search([('lote_id', '=', lote.id)], limit=1)
-                if not ubicacion_lote:
-                    continue  # Si no hay ubicación asociada, omitir este lote
-                
-                # Encontrar la instancia de miempresa correspondiente al complejo
-                miempresa = self.env['mgpp.miempresa'].search([('complejo_id', '=', ubicacion_lote.complejo_id.id)], limit=1)
-                if not miempresa:
-                    continue  # Si no hay empresa asociada, omitir este lote
-                
-                # Crear la instancia de CircularPrecios
-                circular_precios_obj.create({
-                    'name': f'Circular-{self.name}',
-                    'lote_id': lote.id,
-                    'solicitud_rebaja_id': solicitud.id,
-                    'miempresa_id': miempresa.id,  # Vincular con la empresa encontrada
-                    'fecha_emision': fields.Date.today(),
-                    'fecha_ejecucion': fields.Date.today() + timedelta(days=7),  # Ajustar según la lógica
-                })
+    name = fields.Char(string="Título", required=True)
+    codigo23_id = fields.Many2one('mgpp.codigo23', string="Código 23", required=True, ondelete='cascade')
+    complejo_id = fields.Many2one('mgpp.complejo', string="Complejo", required=True, ondelete='cascade')
+    fecha_envio = fields.Datetime(string="Fecha de Envío", default=fields.Datetime.now)       
+# class CircularPrecios(models.Model):
+#     _name = 'mgpp.circular_precios'
+#     _description = 'Circular de Precios'
 
-        # Cambiar el estado de la instancia actual
-        self.estado = 'aplicado'
-        
-class CircularPrecios(models.Model):
-    _name = 'mgpp.circular_precios'
-    _description = 'Circular de Precios'
-
-    name = fields.Char(string="Código Circular", required=True)
-    lote_id = fields.Many2one('mgpp.lote', string='Lote', required=True)
-    lote_producto = fields.Char(string='Producto del Lote', compute='_compute_lote_info', store=True)
-    lote_name = fields.Char(string='Nombre del Lote', compute='_compute_lote_info', store=True)
+#     name = fields.Char(string="Código Circular", required=True)
+#     lote_id = fields.Many2one('mgpp.lote', string='Lote', required=True)
+#     lote_producto = fields.Char(string='Producto del Lote', compute='_compute_lote_info', store=True)
+#     lote_name = fields.Char(string='Nombre del Lote', compute='_compute_lote_info', store=True)
     
-    solicitud_rebaja_id = fields.Many2one('mgpp.solicitud_rebaja', string='Solicitud de Rebaja', required=True)
-    solicitud_codigo = fields.Char(string='Código de Solicitud', compute='_compute_solicitud_info', store=True)
-    solicitud_name = fields.Char(string='Nombre de Solicitud', compute='_compute_solicitud_info', store=True)
-    solicitud_descuento = fields.Float(string='Descuento', compute='_compute_solicitud_info', store=True)
-    solicitud_fecha = fields.Date(string='Fecha de Solicitud', compute='_compute_solicitud_info', store=True)
-    solicitud_precio_aplicado = fields.Float(string='Precio Aplicado', compute='_compute_solicitud_info', store=True)
+#     solicitud_rebaja_id = fields.Many2one('mgpp.solicitud_rebaja', string='Solicitud de Rebaja', required=True)
+#     solicitud_codigo = fields.Char(string='Código de Solicitud', compute='_compute_solicitud_info', store=True)
+#     solicitud_name = fields.Char(string='Nombre de Solicitud', compute='_compute_solicitud_info', store=True)
+#     solicitud_descuento = fields.Float(string='Descuento', compute='_compute_solicitud_info', store=True)
+#     solicitud_fecha = fields.Date(string='Fecha de Solicitud', compute='_compute_solicitud_info', store=True)
+#     solicitud_precio_aplicado = fields.Float(string='Precio Aplicado', compute='_compute_solicitud_info', store=True)
     
-    estado = fields.Selection([
-        ('no_aplicado', 'No Aplicado'),
-        ('aplicado', 'Aplicado')
-    ], string="Estado", default='no_aplicado', required=True)
-    fecha_emision = fields.Date(string='Fecha de Emisión', required=True, default=fields.Date.today)
-    fecha_ejecucion = fields.Date(string='Fecha de Ejecución', required=True)
-    miempresa_id = fields.Many2one('mgpp.miempresa', string='Mi Empresa', ondelete='cascade')
+#     estado = fields.Selection([
+#         ('no_aplicado', 'No Aplicado'),
+#         ('aplicado', 'Aplicado')
+#     ], string="Estado", default='no_aplicado', required=True)
+#     fecha_emision = fields.Date(string='Fecha de Emisión', required=True, default=fields.Date.today)
+#     fecha_ejecucion = fields.Date(string='Fecha de Ejecución', required=True)
+#     miempresa_id = fields.Many2one('mgpp.miempresa', string='Mi Empresa', ondelete='cascade')
 
-    @api.depends('lote_id')
-    def _compute_lote_info(self):
-        for record in self:
-            record.lote_producto = record.lote_id.producto_id.name if record.lote_id and record.lote_id.producto_id else ''
-            record.lote_name = record.lote_id.codigo_lote if record.lote_id else ''
+#     @api.depends('lote_id')
+#     def _compute_lote_info(self):
+#         for record in self:
+#             record.lote_producto = record.lote_id.producto_id.name if record.lote_id and record.lote_id.producto_id else ''
+#             record.lote_name = record.lote_id.codigo_lote if record.lote_id else ''
 
-    @api.depends('solicitud_rebaja_id')
-    def _compute_solicitud_info(self):
-        for record in self:
-            solicitud = record.solicitud_rebaja_id
-            record.solicitud_codigo = solicitud.codigo_23 if solicitud else ''
-            record.solicitud_name = solicitud.name if solicitud else ''
-            record.solicitud_descuento = solicitud.descuento_rebaja if solicitud else 0.0
-            record.solicitud_fecha = solicitud.fecha_solicitud if solicitud else False
-            record.solicitud_precio_aplicado = solicitud.precio_aplicado if solicitud else 0.0
+#     @api.depends('solicitud_rebaja_id')
+#     def _compute_solicitud_info(self):
+#         for record in self:
+#             solicitud = record.solicitud_rebaja_id
+#             record.solicitud_codigo = solicitud.codigo_23 if solicitud else ''
+#             record.solicitud_name = solicitud.name if solicitud else ''
+#             record.solicitud_descuento = solicitud.descuento_rebaja if solicitud else 0.0
+#             record.solicitud_fecha = solicitud.fecha_solicitud if solicitud else False
+#             record.solicitud_precio_aplicado = solicitud.precio_aplicado if solicitud else 0.0

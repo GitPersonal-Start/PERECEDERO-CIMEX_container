@@ -17,5 +17,5 @@ access_mgpp_solicitud_rebaja,mgpp.solicitud_rebaja,model_mgpp_solicitud_rebaja,b
 access_mgpp_approval_log,mgpp.approval_log,model_mgpp_approval_log,base.group_user,1,1,1,1
 access_mgpp_fecha_validacion,mgpp.fecha_validacion,model_mgpp_fecha_validacion,base.group_user,1,1,1,1
 access_mgpp_codigo23,mgpp.codigo23,model_mgpp_codigo23,base.group_user,1,1,1,1
-access_mgpp_circular_precios,mgpp.circular_precios,model_mgpp_circular_precios,base.group_user,1,1,1,1
+access_mgpp_circular,mgpp.circular,model_mgpp_circular,base.group_user,1,1,1,1
 access_mgpp_miempresa,mgpp.miempresa,model_mgpp_miempresa,base.group_user,1,1,1,1
