@@ -35,12 +35,15 @@
         <menuitem id="menu_registro_unidad_medida" name="Unidad de Medida"
             parent="menu_configuracion" sequence="3" action="action_um" />
 
-        <menuitem id="menu_rebaja" name="Rebaja" parent="menu_gestion" action="action_rebaja" />
+
         <menuitem id="menu_solicitud_rebaja" name="Solicitudes de Rebaja" parent="menu_gestion"
             sequence="2" action="action_solicitud_rebaja" />
+        <menuitem id="menu_rebaja" name="Rebaja" parent="menu_gestion" sequence="1" action="action_rebaja" />
         <!-- <menuitem id="menu_fecha_validacion" name="Fecha de Validación" parent="menu_gestion"
         sequence="3" action="action_fecha_validacion" /> -->
-        <menuitem id="menu_codigo_23" name="Codigos 23" parent="menu_gestion" sequence="4"
+        <menuitem id="menu_codigo_23" name="Codigos 23" parent="menu_gestion" sequence="3"
             action="action_codigo23" />
+        <menuitem id="menu_codigo_23" name="Circulares" parent="menu_gestion" sequence="4"
+            action="action_circulars" />
     </data>
 </odoo>
