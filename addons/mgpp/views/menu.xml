@@ -9,8 +9,8 @@
         <menuitem id="menu_registro" name="Registro" parent="menu_perecedero" sequence="2" />
         <menuitem id="menu_gestion" name="Gestión" parent="menu_perecedero" sequence="3" />
         <menuitem id="menu_configuracion" name="Configuración" parent="menu_perecedero" sequence="4" />
-        <menuitem id="menu_miempresa" name="Empresa" parent="menu_perecedero"
-            action="action_miempresa" />
+        <!-- <menuitem id="menu_miempresa" name="Empresa" parent="menu_perecedero"
+            action="action_miempresa" /> -->
         <!-- Submenús -->
         <menuitem id="menu_estructura" name="Estructura Empresa" parent="menu_administracion"
             sequence="1" />

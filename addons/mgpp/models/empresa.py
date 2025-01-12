@@ -132,14 +132,14 @@ class Area(models.Model):
         if self.establecimiento_id:
             self.estado = self.establecimiento_id.estado
             
-class MiEmpresa(models.Model):
-    _name = 'mgpp.miempresa'
-    _description = 'Mi Empresa'
+# class MiEmpresa(models.Model):
+#     _name = 'mgpp.miempresa'
+#     _description = 'Mi Empresa'
 
-    name = fields.Char(string='Nombre', required=True)
-    complejo_id = fields.Many2one('mgpp.complejo', string='Complejo', required=True, ondelete='cascade')
-    circular_precios_ids = fields.One2many('mgpp.circular_precios', 'miempresa_id', string='Circulares de Precios')
-    estado = fields.Selection([
-        ('no_aplicado', 'No Aplicado'),
-        ('aplicado', 'Aplicado')
-    ], string="Estado", default='no_aplicado', required=True)
+#     name = fields.Char(string='Nombre', required=True)
+#     complejo_id = fields.Many2one('mgpp.complejo', string='Complejo', required=True, ondelete='cascade')
+#     circular_precios_ids = fields.One2many('mgpp.circular_precios', 'miempresa_id', string='Circulares de Precios')
+#     estado = fields.Selection([
+#         ('no_aplicado', 'No Aplicado'),
+#         ('aplicado', 'Aplicado')
+#     ], string="Estado", default='no_aplicado', required=True)

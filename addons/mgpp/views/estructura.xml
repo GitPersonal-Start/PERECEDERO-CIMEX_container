@@ -20,11 +20,11 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record id="action_miempresa" model="ir.actions.act_window">
+        <!-- <record id="action_miempresa" model="ir.actions.act_window">
             <field name="name">Empresa</field>
             <field name="res_model">mgpp.miempresa</field>
             <field name="view_mode">tree,form</field>
-        </record>
+        </record> -->
 
         <!-- # Vistas para la clase Sucursal  -->
         <record id="view_tree_sucursal" model="ir.ui.view">
@@ -275,7 +275,7 @@
                 </form>
             </field>
         </record>
-        <odoo>
+        <!-- <odoo>
             <record id="view_miempresa_form" model="ir.ui.view">
                 <field name="name">mgpp.miempresa.form</field>
                 <field name="model">mgpp.miempresa</field>
@@ -309,7 +309,7 @@
                 </field>
             </record>
 
-        </odoo>
+        </odoo> -->
 
         <!-- Acciones de Vistas -->
         <!-- Accion de Empresa-->
