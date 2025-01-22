@@ -43,7 +43,7 @@
         sequence="3" action="action_fecha_validacion" /> -->
         <menuitem id="menu_codigo_23" name="Codigos 23" parent="menu_gestion" sequence="3"
             action="action_codigo23" />
-        <menuitem id="menu_codigo_23" name="Circulares" parent="menu_gestion" sequence="4"
-            action="action_circulars" />
+        <menuitem id="menu_circulares" name="Circulares" parent="menu_gestion" sequence="4"
+            action="action_circulares" />
     </data>
 </odoo>

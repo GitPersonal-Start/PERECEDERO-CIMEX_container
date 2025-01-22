@@ -28,15 +28,15 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record id="action_circulars" model="ir.actions.act_window">
+    <record id="action_circulares" model="ir.actions.act_window">
         <field name="name">Circulares</field>
         <field name="res_model">mgpp.circular</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">
+        <!-- <field name="domain">
             [([('sucursal_id', '=', user.sucursal_id.id)) if user.sucursal_id else
             (['('complejo_id', '=', user.complejo_id.id)) if user.complejo_id else
             ('establecimiento_id', '=', user.establecimiento_id.id)]
-        </field>
+        </field> -->
     </record>
 
     <!-- vista tree de Rebaja  -->
@@ -232,8 +232,6 @@
             </form>
         </field>
     </record>
-
-
     <record id="view_solicitud_rebaja_kanban" model="ir.ui.view">
         <field name="name">solicitud.rebaja.kanban</field>
         <field name="model">mgpp.solicitud_rebaja</field>
@@ -353,13 +351,8 @@
                                 </tree>
                             </field>
                         </page>
-
                     </notebook>
-                    <footer>
-
-                    </footer>
                 </sheet>
-
             </form>
         </field>
     </record>

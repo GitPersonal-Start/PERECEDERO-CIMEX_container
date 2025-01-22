@@ -94,7 +94,7 @@ class Codigo23(models.Model):
     def enviar_circular_a_establecimientos(self):
         for record in self:
             # Obtener ubicaciones de lote relacionadas con las solicitudes
-            ubicaciones = record.solicitudes_ids.mapped('lote_id.ubicacion_lote_ids')
+            ubicaciones = record.solicitudes_ids.mapped('lote_id.ubicaciones_ids')
             self.write({'estado': 'aplicado'}) 
             # Crear circulares para cada establecimiento
             for ubicacion in ubicaciones:

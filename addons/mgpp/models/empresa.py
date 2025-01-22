@@ -66,19 +66,19 @@ class Complejo(models.Model):
     _sql_constraints = [
         ('codigo_unique', 'unique(codigo)', 'El código del complejo debe ser único.')
     ]
-    @api.model
-    def create(self, vals):
-        # Crear la instancia del complejo
-        complejo = super(Complejo, self).create(vals)
+    # @api.model
+    # def create(self, vals):
+    #     # Crear la instancia del complejo
+    #     complejo = super(Complejo, self).create(vals)
 
-        # Crear automáticamente una instancia de miempresa
-        self.env['mgpp.miempresa'].create({
-            'name': complejo.name,  # Usar el nombre del complejo
-            'complejo_id': complejo.id,  # Relacionar con el complejo
-            'estado': 'no_aplicado'
-        })
+    #     # Crear automáticamente una instancia de miempresa
+    #     self.env['mgpp.miempresa'].create({
+    #         'name': complejo.name,  # Usar el nombre del complejo
+    #         'complejo_id': complejo.id,  # Relacionar con el complejo
+    #         'estado': 'no_aplicado'
+    #     })
 
-        return complejo
+    #     return complejo
     @api.constrains('name')
     def _check_name(self):
         for record in self:
