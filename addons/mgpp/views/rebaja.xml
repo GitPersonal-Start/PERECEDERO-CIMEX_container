@@ -5,16 +5,16 @@
     <record id="action_rebaja" model="ir.actions.act_window">
         <field name="name">Rebajas</field>
         <field name="res_model">mgpp.rebaja</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form,graph,kanban</field>
         <field name="context">{'group_by': 'producto_id'}</field>
     </record>
     <!-- Accion de Solicitud de Rebaja -->
-    <record id="action_solicitud_rebaja" model="ir.actions.act_window">
+    <!-- <record id="action_solicitud_rebaja" model="ir.actions.act_window">
         <field name="name">Solicitudes de Rebajas</field>
         <field name="res_model">mgpp.solicitud_rebaja</field>
-        <field name="view_mode">tree,form,kanban</field>
-        <!-- <field name="domain">[('solicitud_valida', '=', True)]</field> -->
-    </record>
+        <field name="view_mode">tree,form,graph,kanban</field>
+        <field name="domain">[('solicitud_valida', '=', True)]</field>
+    </record> -->
     <!-- Accion de finalizar -->
     <record id="action_fecha_validacion" model="ir.actions.act_window">
         <field name="name">Solicitudes Fechas Validacion</field>
@@ -31,14 +31,24 @@
     <record id="action_circulares" model="ir.actions.act_window">
         <field name="name">Circulares</field>
         <field name="res_model">mgpp.circular</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,</field>
         <!-- <field name="domain">
             [([('sucursal_id', '=', user.sucursal_id.id)) if user.sucursal_id else
             (['('complejo_id', '=', user.complejo_id.id)) if user.complejo_id else
             ('establecimiento_id', '=', user.establecimiento_id.id)]
         </field> -->
     </record>
-
+    <record id="view_rebaja_perdida_graph_view" model="ir.ui.view">
+        <field name="name">mgpp.rebaja.perdida.graph</field>
+        <field name="model">mgpp.rebaja</field>
+        <field name="arch" type="xml">
+            <graph string="Pérdida de Ganancias por Rebaja">
+                <field name="name" />
+                <field name="perdida_ganancias" type="measure" />
+            </graph>
+        </field>
+        <field name="groups_id" eval="[(4, ref('group_gerente_comercial')),(4, ref('group_revisor')),(4, ref('group_aprobador'))]" />
+    </record>
     <!-- vista tree de Rebaja  -->
     <record id="view_tree_rebaja" model="ir.ui.view">
         <field name="name">view.tree.rebaja</field>
@@ -60,6 +70,7 @@
             </tree>
 
         </field>
+        <field name="groups_id" eval="[(4, ref('group_gerente_comercial')),(4, ref('group_revisor')),(4, ref('group_aprobador'))]" />
     </record>
     <record id="view_kanban_rebaja" model="ir.ui.view">
         <field name="name">view.kanban.rebaja</field>
@@ -100,6 +111,7 @@
                 </templates>
             </kanban>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_gerente_comercial')),(4, ref('group_revisor')),(4, ref('group_aprobador'))]" />
     </record>
     <!--  vista form de Rebajas -->
     <record id="view_form_rebaja" model="ir.ui.view">
@@ -159,6 +171,7 @@
                 </sheet>
             </form>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_gerente_comercial')),(4, ref('group_revisor')),(4, ref('group_aprobador'))]" />
     </record>
     <record id="view_solicitud_rebaja_tree" model="ir.ui.view">
         <field name="name">solicitud.rebaja.tree</field>
@@ -185,11 +198,13 @@
 
             </tree>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_gerente_comercial')),(4, ref('group_revisor')),(4, ref('group_aprobador'))]" />
     </record>
+
     <record id="action_solicitud_rebaja" model="ir.actions.act_window">
         <field name="name">Solicitudes Revisadas</field>
         <field name="res_model">mgpp.solicitud_rebaja</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,graph,kanban</field>
         <field name="domain">[('estado', 'in', ['revisada', 'pendiente_aprobacion',
             'aprobado'])]</field>
         <field name="context">{'group_by': 'rebaja_id'}</field>
@@ -231,6 +246,7 @@
                 </sheet>
             </form>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_gerente_comercial')),(4, ref('group_revisor')),(4, ref('group_aprobador'))]" />
     </record>
     <record id="view_solicitud_rebaja_kanban" model="ir.ui.view">
         <field name="name">solicitud.rebaja.kanban</field>
@@ -266,7 +282,21 @@
                 </templates>
             </kanban>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_gerente_comercial')),(4, ref('group_revisor')),(4, ref('group_aprobador'))]" />
     </record>
+    <record id="view_solicitud_rebaja_estado_graph_view" model="ir.ui.view">
+        <field name="name">mgpp.solicitud_rebaja.estado.graph</field>
+        <field name="model">mgpp.solicitud_rebaja</field>
+        <field name="arch" type="xml">
+            <graph string="Solicitudes de Rebaja por Estado">
+                <field name="estado" />
+                <field name="lote_id" type="row" />
+                <field name="id" type="measure" />
+            </graph>
+        </field>
+        <field name="groups_id" eval="[(4, ref('group_gerente_comercial')),(4, ref('group_revisor')),(4, ref('group_aprobador'))]" />
+    </record>
+
     <!-- vista tree de finalizacion  -->
     <record id="view_tree_fecha_validacion" model="ir.ui.view">
         <field name="name">fecha.validacion.tree</field>
@@ -304,6 +334,7 @@
                 </sheet>
             </form>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_precio'))]" />
     </record>
     <record id="view_tree_codigo23" model="ir.ui.view">
         <field name="name">codigo23.tree</field>
@@ -315,10 +346,12 @@
                 <field name="valid_fecha_ids" invisible="1" />
                 <field name="estado" />
                 <field name="cantidad_solicitudes" />
-                <button string="Aplicar Circular" type="object" name="enviar_circular_a_establecimientos"
-                        attrs="{'invisible': [('estado', '!=', 'sin_aplicar')]}" class="btn-primary" />
+                <button string="Aplicar Circular" type="object"
+                    name="enviar_circular_a_establecimientos"
+                    attrs="{'invisible': [('estado', '!=', 'sin_aplicar')]}" class="btn-primary" />
             </tree>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_precio'))]" />
     </record>
     <record id="view_form_codigo23" model="ir.ui.view">
         <field name="name">codigo23.form</field>
@@ -338,7 +371,8 @@
                         <field name="cantidad_solicitudes" readonly="1" />
                         <field name="valid_fecha_ids" invisible="1" />
                     </group>
-                    <button string="Aplicar Circular" type="object" name="enviar_circular_a_establecimientos"
+                    <button string="Aplicar Circular" type="object"
+                        name="enviar_circular_a_establecimientos"
                         attrs="{'invisible': [('estado', '!=', 'sin_aplicar')]}" class="btn-primary" />
                     <!-- Sección con detalles -->
                     <notebook>
@@ -355,6 +389,7 @@
                 </sheet>
             </form>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_precio'))]" />
     </record>
     <record id="view_circular_tree" model="ir.ui.view">
         <field name="name">mgpp.circular.tree</field>
@@ -369,6 +404,7 @@
                 <field name="fecha_envio" />
             </tree>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_precio'))]" />
     </record>
     <record id="view_circular_form" model="ir.ui.view">
         <field name="name">mgpp.circular.form</field>
@@ -385,6 +421,7 @@
                 </sheet>
             </form>
         </field>
+        <field name="groups_id" eval="[(4, ref('group_precio'))]" />
     </record>
 
     <!-- </data> -->

@@ -39,6 +39,7 @@
                     <field name="empleados_count" string="Número de Complejos" />
                 </tree>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_administrador'))]" />
         </record>
 
         <record id="view_form_sucursal" model="ir.ui.view">
@@ -101,6 +102,7 @@
                     </sheet>
                 </form>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_administrador'))]" />
         </record>
 
 
@@ -116,6 +118,7 @@
                     <field name="empleados_count" string="Número de Establecimientos" />
                 </tree>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_administrador'))]" />
         </record>
         <record id="view_form_complejo" model="ir.ui.view">
             <field name="name">complejo.form</field>
@@ -176,6 +179,7 @@
                     </sheet>
                 </form>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_administrador'))]" />
         </record>
 
         <!-- # Vistas para la clase Establecimiento -->
@@ -191,6 +195,7 @@
                     <field name="empleados_count" string="Número de Áreas" />
                 </tree>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_administrador'))]" />
         </record>
 
         <record id="view_form_establecimiento" model="ir.ui.view">
@@ -253,6 +258,7 @@
                     </sheet>
                 </form>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_administrador'))]" />
         </record>
         <record id="view_form_area" model="ir.ui.view">
             <field name="name">area.form</field>
@@ -274,6 +280,7 @@
                     </sheet>
                 </form>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_administrador'))]" />
         </record>
         <!-- <odoo>
             <record id="view_miempresa_form" model="ir.ui.view">

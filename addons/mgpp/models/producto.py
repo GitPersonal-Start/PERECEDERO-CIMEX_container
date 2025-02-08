@@ -28,6 +28,21 @@ class Producto(models.Model):
         help="Cantidad total de productos disponibles en todos los lotes."
     )
 
+    solicitudes_count = fields.Integer(
+        string='Cantidad de Solicitudes',
+        compute='_compute_solicitudes_count',
+        store=True,
+        help="Cantidad de solicitudes de rebaja asociadas a este producto."
+    )
+    
+    @api.depends('lotes_ids.rebaja_id.solicitudes_ids')
+    def _compute_solicitudes_count(self):
+        for producto in self:
+            solicitudes_count = 0
+            for lote in producto.lotes_ids:
+                solicitudes_count += len(lote.rebaja_id.solicitudes_ids)
+            producto.solicitudes_count = solicitudes_count
+    
     @api.depends('lotes_ids.cantidad')
     def _compute_existencia(self):
         for record in self:
@@ -120,7 +135,7 @@ class Lote(models.Model):
     _description = 'Lote de Producto Perecedero'
 
     producto_id = fields.Many2one('mgpp.producto', string="Producto Asociado", required=True)
-    codigo_lote = fields.Char(string="Codigo de Lote", required=True)
+    codigo_lote = fields.Char(string="Código de Lote", required=True)
     fecha_vencimiento = fields.Date(string="Fecha de Vencimiento", required=True)
     ubicaciones_ids = fields.One2many('mgpp.ubicacion_lote', 'lote_id', string="Ubicaciones del Lote", ondelete='cascade')
     etiqueta_ids = fields.One2many('mgpp.etiqueta', 'lote_ids', string="Etiquetas" , domain="[('estado', '=', True)]")
@@ -139,10 +154,34 @@ class Lote(models.Model):
     )
     create_date = fields.Datetime(string='Fecha de Creacion', readonly=True)
     write_date = fields.Datetime(string='Fecha de Modificacion', readonly=True)
-    precio = fields.Float(string='Precio', required=True, digits=(10, 2))
-    costo = fields.Float(string='Costo', required=True, digits=(10, 2))
+    precio = fields.Float(string='Precio CUP', required=True, digits=(10, 2))
+    costo = fields.Float(string='Costo CUP', required=True, digits=(10, 2))
     rebaja_id = fields.One2many('mgpp.rebaja', 'lote_id', string="Rebaja Asociada", readonly=True, ondelete='cascade')
+    descuento_promedio = fields.Float(
+        string='Descuento Promedio',
+        compute='_compute_descuento_promedio',
+        store=True,
+        help="Descuento promedio aplicado a este lote."
+    )
     
+    
+    @api.depends('rebaja_id.descuento_rebaja')
+    def _compute_descuento_promedio(self):
+        for lote in self:
+            descuentos = lote.rebaja_id.mapped('descuento_rebaja')
+            lote.descuento_promedio = sum(descuentos) / len(descuentos) if descuentos else 0
+            
+    @api.constrains('codigo_lote')
+    def _check_codigo_lote(self):
+        for record in self:
+            # Validar que solo contenga números
+            if not record.codigo_lote.isdigit():
+                raise ValidationError("El código de lote solo puede contener números.")
+
+            # Validar la longitud del código de barras
+            longitud_esperada = 13  # Cambia este valor según el estándar que uses (EAN-13, UPC-A, etc.)
+            if len(record.codigo_lote) != longitud_esperada:
+                raise ValidationError(f"El código de lote debe tener exactamente {longitud_esperada} dígitos.")        
     _sql_constraints = [
         ('unique_fecha_vencimiento_producto',
          'UNIQUE(producto_id, fecha_vencimiento)',

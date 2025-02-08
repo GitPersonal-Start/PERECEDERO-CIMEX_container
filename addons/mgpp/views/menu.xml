@@ -9,9 +9,6 @@
         <menuitem id="menu_registro" name="Registro" parent="menu_perecedero" sequence="2" />
         <menuitem id="menu_gestion" name="Gestión" parent="menu_perecedero" sequence="3" />
         <menuitem id="menu_configuracion" name="Configuración" parent="menu_perecedero" sequence="4" />
-        <!-- <menuitem id="menu_miempresa" name="Empresa" parent="menu_perecedero"
-            action="action_miempresa" /> -->
-        <!-- Submenús -->
         <menuitem id="menu_estructura" name="Estructura Empresa" parent="menu_administracion"
             sequence="1" />
         <menuitem id="menu_estructura_sucursal" name="Sucursal" parent="menu_estructura"
@@ -39,8 +36,6 @@
         <menuitem id="menu_solicitud_rebaja" name="Solicitudes de Rebaja" parent="menu_gestion"
             sequence="2" action="action_solicitud_rebaja" />
         <menuitem id="menu_rebaja" name="Rebaja" parent="menu_gestion" sequence="1" action="action_rebaja" />
-        <!-- <menuitem id="menu_fecha_validacion" name="Fecha de Validación" parent="menu_gestion"
-        sequence="3" action="action_fecha_validacion" /> -->
         <menuitem id="menu_codigo_23" name="Codigos 23" parent="menu_gestion" sequence="3"
             action="action_codigo23" />
         <menuitem id="menu_circulares" name="Circulares" parent="menu_gestion" sequence="4"

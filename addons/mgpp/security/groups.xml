@@ -1,0 +1,419 @@
+<odoo>
+    <data>
+
+        <record id="module_category_mgpp" model="ir.module.category">
+            <field name="name">Gestión de Productos Perecederos</field>
+            <field name="description">Categoría para grupos del módulo de Gestión de Productos
+                Perecederos</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="module_category_registrador" model="ir.module.category">
+            <field name="name">Registro de Productos Lotes</field>
+            <field name="description">Categoría para grupos del módulo de Registro de Productos
+                Perecederos</field>
+            <field name="sequence">11</field>
+        </record>
+        <record id="module_category_gerente_comercial" model="ir.module.category">
+            <field name="name">Creacion de Solicitudes de Rebaja</field>
+            <field name="description">Categoría para grupos del módulo de Creacion de Solicitudes de
+                Rebaja</field>
+            <field name="sequence">12</field>
+        </record>
+        <record id="module_category_revisor" model="ir.module.category">
+            <field name="name">Revisor de Solicitudes de Rebaja</field>
+            <field name="description">Categoría para grupos del módulo de Revisor de Solicitudes de
+                Rebaja</field>
+            <field name="sequence">13</field>
+        </record>
+        <record id="module_category_aprobador" model="ir.module.category">
+            <field name="name">Aprobador de Solicitudes de Rebaja</field>
+            <field name="description">Categoría para grupos del módulo de Aprobador de Solicitudes
+                de Rebaja</field>
+            <field name="sequence">14</field>
+        </record>
+        <record id="module_category_presio" model="ir.module.category">
+            <field name="name">Creacion de Codigos 23 y Circulares</field>
+            <field name="description">Categoría para grupos del módulo de Creacion de Codigos 23 y
+                Circulares </field>
+            <field name="sequence">15</field>
+        </record>
+        <!-- Definición del grupo Administrador -->
+        <record id="group_administrador" model="res.groups">
+            <field name="name">Administrador</field>
+            <field name="category_id" ref="module_category_mgpp" />
+        </record>
+
+        <!-- Definición del grupo Registrador -->
+        <record id="group_registrador" model="res.groups">
+            <field name="name">Registrador</field>
+            <field name="category_id" ref="module_category_registrador" />
+        </record>
+
+        <!-- Definición del grupo Gerente Comercial -->
+        <record id="group_gerente_comercial" model="res.groups">
+            <field name="name">Gerente Comercial</field>
+            <field name="category_id" ref="module_category_gerente_comercial" />
+        </record>
+
+        <!-- Definición del grupo Revisor -->
+        <record id="group_revisor" model="res.groups">
+            <field name="name">Revisor</field>
+            <field name="category_id" ref="module_category_revisor" />
+        </record>
+
+        <!-- Definición del grupo Aprobador -->
+        <record id="group_aprobador" model="res.groups">
+            <field name="name">Aprobador</field>
+            <field name="category_id" ref="module_category_aprobador" />
+        </record>
+
+        <!-- Definición del grupo Precio -->
+        <record id="group_precio" model="res.groups">
+            <field name="name">Presio</field>
+            <field name="category_id" ref="module_category_presio" />
+        </record>
+
+        <!-- Permisos para el grupo Administrador -->
+        <record id="access_mgpp_direccion_mixin_admin" model="ir.model.access">
+            <field name="name">mgpp.direccion_mixin - Administrador</field>
+            <field name="model_id" ref="model_mgpp_direccion_mixin" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_contacto_mixin_admin" model="ir.model.access">
+            <field name="name">mgpp.contacto_mixin - Administrador</field>
+            <field name="model_id" ref="model_mgpp_contacto_mixin" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_sucursal_admin" model="ir.model.access">
+            <field name="name">mgpp.sucursal - Administrador</field>
+            <field name="model_id" ref="model_mgpp_sucursal" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_complejo_admin" model="ir.model.access">
+            <field name="name">mgpp.complejo - Administrador</field>
+            <field name="model_id" ref="model_mgpp_complejo" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_establecimiento_admin" model="ir.model.access">
+            <field name="name">mgpp.establecimiento - Administrador</field>
+            <field name="model_id" ref="model_mgpp_establecimiento" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_area_admin" model="ir.model.access">
+            <field name="name">mgpp.area - Administrador</field>
+            <field name="model_id" ref="model_mgpp_area" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_categoria_admin" model="ir.model.access">
+            <field name="name">mgpp.categoria - Administrador</field>
+            <field name="model_id" ref="model_mgpp_categoria" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_etiqueta_admin" model="ir.model.access">
+            <field name="name">mgpp.etiqueta - Administrador</field>
+            <field name="model_id" ref="model_mgpp_etiqueta" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_um_admin" model="ir.model.access">
+            <field name="name">mgpp.um - Administrador</field>
+            <field name="model_id" ref="model_mgpp_um" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+
+        <!-- Permisos para el grupo Registrador  -->
+        <record id="access_mgpp_rebaja_lote_regis" model="ir.model.access">
+            <field name="name">mgpp.rebaja_lote - Registrador</field>
+            <field name="model_id" ref="model_mgpp_rebaja_lote" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_producto_regis" model="ir.model.access">
+            <field name="name">mgpp.producto - Registrador</field>
+            <field name="model_id" ref="model_mgpp_producto" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_ubicacion_lote_regis" model="ir.model.access">
+            <field name="name">mgpp.ubicacion_lote - Registrador</field>
+            <field name="model_id" ref="model_mgpp_ubicacion_lote" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_lote_regis" model="ir.model.access">
+            <field name="name">mgpp.lote - Registrador</field>
+            <field name="model_id" ref="model_mgpp_lote" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_rebaja_registrador" model="ir.model.access">
+            <field name="name">mgpp.rebaja - Registrador</field>
+            <field name="model_id" ref="model_mgpp_rebaja" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">0</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_solicitud_rebaja_registrador" model="ir.model.access">
+            <field name="name">mgpp.solicitud_rebaja - Registrador</field>
+            <field name="model_id" ref="model_mgpp_solicitud_rebaja" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">0</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_complejo_regis" model="ir.model.access">
+            <field name="name">mgpp.complejo - Registrador</field>
+            <field name="model_id" ref="model_mgpp_complejo" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_establecimiento_regis" model="ir.model.access">
+            <field name="name">mgpp.establecimiento - Registrador</field>
+            <field name="model_id" ref="model_mgpp_establecimiento" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_area_regis" model="ir.model.access">
+            <field name="name">mgpp.area - Registrador</field>
+            <field name="model_id" ref="model_mgpp_area" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_categoria_regis" model="ir.model.access">
+            <field name="name">mgpp.categoria - Registrador</field>
+            <field name="model_id" ref="model_mgpp_categoria" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_etiqueta_regis" model="ir.model.access">
+            <field name="name">mgpp.etiqueta - Registrador</field>
+            <field name="model_id" ref="model_mgpp_etiqueta" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_um_regis" model="ir.model.access">
+            <field name="name">mgpp.um - Registrador</field>
+            <field name="model_id" ref="model_mgpp_um" />
+            <field name="group_id" ref="group_registrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        
+        <!-- Permisos para el grupo Gerente Comercial  -->
+
+        <record id="access_mgpp_rebaja_gerente_comercial" model="ir.model.access">
+            <field name="name">mgpp.rebaja - Gerente Comercial</field>
+            <field name="model_id" ref="model_mgpp_rebaja" />
+            <field name="group_id" ref="group_gerente_comercial" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_solicitud_rebaja_gerente_comercial" model="ir.model.access">
+            <field name="name">mgpp.solicitud_rebaja - Gerente Comercial</field>
+            <field name="model_id" ref="model_mgpp_solicitud_rebaja" />
+            <field name="group_id" ref="group_gerente_comercial" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <!-- Permisos para el grupo Revisor  -->
+
+        <record id="access_mgpp_rebaja_revisor" model="ir.model.access">
+            <field name="name">mgpp.rebaja - Revisor</field>
+            <field name="model_id" ref="model_mgpp_rebaja" />
+            <field name="group_id" ref="group_revisor" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_solicitud_rebaja_revisor" model="ir.model.access">
+            <field name="name">mgpp.solicitud_rebaja - Revisor</field>
+            <field name="model_id" ref="model_mgpp_solicitud_rebaja" />
+            <field name="group_id" ref="group_revisor" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <!-- Permisos para el grupo Aprobador  -->
+
+        <record id="access_mgpp_rebaja_aprobador" model="ir.model.access">
+            <field name="name">mgpp.rebaja - Aprobador</field>
+            <field name="model_id" ref="model_mgpp_rebaja" />
+            <field name="group_id" ref="group_aprobador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_solicitud_rebaja_aprobador" model="ir.model.access">
+            <field name="name">mgpp.solicitud_rebaja - Aprobador</field>
+            <field name="model_id" ref="model_mgpp_solicitud_rebaja" />
+            <field name="group_id" ref="group_aprobador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_circular_admin" model="ir.model.access">
+            <field name="name">mgpp.circular - Aprobador</field>
+            <field name="model_id" ref="model_mgpp_circular" />
+            <field name="group_id" ref="group_aprobador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <!-- Permisos para el grupo Presio -->
+        <record id="access_mgpp_codigo23_admin" model="ir.model.access">
+            <field name="name">mgpp.codigo23 - Presio</field>
+            <field name="model_id" ref="model_mgpp_codigo23" />
+            <field name="group_id" ref="group_precio" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+        <record id="access_mgpp_rebaja_gerente_comercial" model="ir.model.access">
+            <field name="name">mgpp.rebaja - Presio</field>
+            <field name="model_id" ref="model_mgpp_rebaja" />
+            <field name="group_id" ref="group_precio" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_mgpp_circular_admin" model="ir.model.access">
+            <field name="name">mgpp.circular - Presio</field>
+            <field name="model_id" ref="model_mgpp_circular" />
+            <field name="group_id" ref="group_precio" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+
+        <!-- Permisos para el grupo Todos -->
+        <!-- <record id="access_mgpp_approval_log_admin" model="ir.model.access">
+            <field name="name">mgpp.approval_log - Administrador</field>
+            <field name="model_id" ref="model_mgpp_approval_log" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <record id="access_mgpp_fecha_validacion_admin" model="ir.model.access">
+            <field name="name">mgpp.fecha_validacion - Administrador</field>
+            <field name="model_id" ref="model_mgpp_fecha_validacion" />
+            <field name="group_id" ref="group_administrador" />
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record> 
+-->
+    </data>
+</odoo>

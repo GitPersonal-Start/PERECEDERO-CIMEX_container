@@ -5,13 +5,13 @@
         <record id="action_producto" model="ir.actions.act_window">
             <field name="name">Productos</field>
             <field name="res_model">mgpp.producto</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,graph</field>
         </record>
         <!-- Accion de Lote -->
         <record id="action_lote" model="ir.actions.act_window">
             <field name="name">Lotes</field>
             <field name="res_model">mgpp.lote</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,graph</field>
         </record>
         <!-- Accion de Rebaja Lote -->
         <record id="action_rebaja_lote" model="ir.actions.act_window">
@@ -19,6 +19,30 @@
             <field name="res_model">mgpp.rebaja_lote</field>
             <field name="view_mode">tree,form</field>
         </record>
+        <record id="view_producto_solicitudes_graph_view" model="ir.ui.view">
+            <field name="name">mgpp.producto.solicitudes.graph</field>
+            <field name="model">mgpp.producto</field>
+            <field name="arch" type="xml">
+                <graph string="Solicitudes de Rebaja por Producto">
+                    <field name="name" />
+                    <field name="solicitudes_count" type="measure" />
+                </graph>
+            </field>
+            <field name="groups_id" eval="[(4, ref('group_registrador'))]" />
+        </record>
+        <record id="view_lote_descuento_graph_view" model="ir.ui.view">
+            <field name="name">mgpp.lote.descuento.graph</field>
+            <field name="model">mgpp.lote</field>
+            <field name="arch" type="xml">
+                <graph string="Descuentos por Lote">
+                    <field name="codigo_lote" />
+                    <field name="descuento_promedio" type="measure" />
+                </graph>
+            </field>
+            <field name="groups_id" eval="[(4, ref('group_registrador'))]" />
+        </record>
+
+
         <!-- vista tree de Productos  -->
         <record id="view_tree_productos" model="ir.ui.view">
             <field name="name">view.tree.producto</field>
@@ -32,6 +56,7 @@
                     <field name="estado" />
                 </tree>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_registrador'))]" />
         </record>
         <!--  vista form de productos -->
         <record id="view_form_producto" model="ir.ui.view">
@@ -48,8 +73,9 @@
                         </div>
                         <group string="Información General" colspan="4">
                             <group>
-                                <field name="categoria_id" attrs="{'readonly': [('name', '=', False)]}"/>
-                                <field name="estado" attrs="{'readonly': [('name', '=', False)]}"/>
+                                <field name="categoria_id"
+                                    attrs="{'readonly': [('name', '=', False)]}" />
+                                <field name="estado" attrs="{'readonly': [('name', '=', False)]}" />
                             </group>
                             <group>
                                 <field name="existencia" readonly="1" />
@@ -57,7 +83,8 @@
                             </group>
                             <group colspan="4">
                                 <field name="descripcion" widget="text"
-                                    placeholder="Agrega una descripción detallada..." attrs="{'readonly': [('estado', '=', False)]}"/>
+                                    placeholder="Agrega una descripción detallada..."
+                                    attrs="{'readonly': [('estado', '=', False)]}" />
                             </group>
                         </group>
                         <notebook>
@@ -78,6 +105,7 @@
                     </sheet>
                 </form>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_registrador'))]" />
         </record>
         <!-- vista tree de Lotes -->
         <record id="view_tree_lote" model="ir.ui.view">
@@ -96,6 +124,7 @@
                     <field name="estado" readonly="1" />
                 </tree>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_registrador'))]" />
         </record>
         <!--  vista form de Lotes -->
         <record id="view_form_lote" model="ir.ui.view">
@@ -107,10 +136,12 @@
                         <group>
                             <group>
                                 <field name="producto_id" string="Producto Asociado" />
-                                <field name="codigo_lote" attrs="{'readonly': [('producto_id', '=', False)]}"/>
+                                <field name="codigo_lote"
+                                    attrs="{'readonly': [('producto_id', '=', False)]}" />
                             </group>
                             <group>
-                                <field name="fecha_vencimiento" attrs="{'readonly': [('codigo_lote', '=', False)]}"/>
+                                <field name="fecha_vencimiento"
+                                    attrs="{'readonly': [('codigo_lote', '=', False)]}" />
                                 <field name="estado" readonly="1" />
                             </group>
                         </group>
@@ -118,8 +149,10 @@
                             <page string="Datos del Lote">
                                 <group>
                                     <group>
-                                        <field name="etiqueta_ids" widget="many2many_tags" attrs="{'readonly': [('fecha_vencimiento', '=', False)]}"/>
-                                        <field name="unidad_medida" attrs="{'readonly': [('fecha_vencimiento', '=', False)]}"/>
+                                        <field name="etiqueta_ids" widget="many2many_tags"
+                                            attrs="{'readonly': [('fecha_vencimiento', '=', False)]}" />
+                                        <field name="unidad_medida"
+                                            attrs="{'readonly': [('fecha_vencimiento', '=', False)]}" />
                                         <field name="categoria" readonly="1" />
                                     </group>
                                     <group>
@@ -133,9 +166,12 @@
                                 <field name="ubicaciones_ids">
                                     <tree string="Ubicacion del Lote" editable="bottom">
                                         <field name="complejo_id" />
-                                        <field name="establecimiento_id" attrs="{'readonly': [('complejo_id', '=', False)]}"/>
-                                        <field name="area_id" attrs="{'readonly': [('establecimiento_id', '=', False)]}"/>
-                                        <field name="cantidad" attrs="{'readonly': [('area_id', '=', False)]}"/>
+                                        <field name="establecimiento_id"
+                                            attrs="{'readonly': [('complejo_id', '=', False)]}" />
+                                        <field name="area_id"
+                                            attrs="{'readonly': [('establecimiento_id', '=', False)]}" />
+                                        <field name="cantidad"
+                                            attrs="{'readonly': [('area_id', '=', False)]}" />
                                     </tree>
                                 </field>
                             </page>
@@ -143,6 +179,7 @@
                     </sheet>
                 </form>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_registrador'))]" />
         </record>
         <!-- vista tree de Rebaja Lotes -->
         <record id="view_tree_rebaja_lotes" model="ir.ui.view">
@@ -158,6 +195,7 @@
                     <field name="fecha_rebaja" widget="date" />
                 </tree>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_registrador'))]" />
         </record>
         <record id="view_rebaja_lote_form" model="ir.ui.view">
             <field name="name">rebaja.lote.form</field>
@@ -178,13 +216,11 @@
 
                             <!-- Campo Establecimiento (deshabilitado si no hay lote seleccionado) -->
                             <field name="establecimiento_id"
-                                
                                 attrs="{'readonly': [('lote_id', '=', False)]}"
                                 options="{'no_create': True}" />
 
                             <!-- Campo Área (deshabilitado si no hay establecimiento seleccionado) -->
                             <field name="area_id"
-                                
                                 attrs="{'readonly': [('establecimiento_id', '=', False)]}"
                                 options="{'no_create': True}" />
                         </group>
@@ -206,8 +242,7 @@
                     </sheet>
                 </form>
             </field>
+            <field name="groups_id" eval="[(4, ref('group_registrador'))]" />
         </record>
-
-
     </data>
 </odoo>

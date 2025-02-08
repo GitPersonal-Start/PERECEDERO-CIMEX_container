@@ -25,6 +25,17 @@ class Rebaja(models.Model):
     fecha_modificacion = fields.Date(string='Fecha de Modificación', readonly=True)
     observaciones = fields.Text(string='Observaciones', readonly=True)
 
+    perdida_ganancias = fields.Float(
+        string='Pérdida de Ganancias',
+        compute='_compute_perdida_ganancias',
+        store=True,
+        help="Pérdida de ganancias debido a las rebajas aplicadas."
+    )
+    @api.depends('precio_inicial', 'precio_actual')
+    def _compute_perdida_ganancias(self):
+        for rebaja in self:
+            rebaja.perdida_ganancias = rebaja.precio_inicial - rebaja.precio_actual
+
     @api.depends('fecha_finalizacion')
     def _compute_dias_restantes(self):
         """Calcula los días restantes hasta la fecha de finalización."""
@@ -202,7 +213,7 @@ class SolicitudRebaja(models.Model):
                     ('fechas_vencimiento', '=', record.fechas_vencimiento)
                 ])
                 for solicitud in solicitudes_conflictivas:
-                    if solicitud.descuento_rebaja > record.descuento_rebaja:
+                    if solicitud.descuento_rebaja == record.descuento_rebaja:
                         raise ValidationError(
                             f"No es lógico aprobar una rebaja del {record.descuento_rebaja}% "
                             f"con fecha de validación {record.fechas_validacion} si existe una rebaja del "
